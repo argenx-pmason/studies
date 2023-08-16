@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "study": "ARGX-113-1904",
+    "role": "QC Programmer",
+    "name": "Anna Zaniewska",
+    "from": "2023/10/01",
+    "to": "2023/11/01"
+  },
+  {
+    "id": 2,
+    "study": "ARGX-113-1904",
+    "role":"In-Text Tables",
+    "name": "Phil Mason",
+    "from": "2023/10/01",
+    "to": "2023/10/11"
+  }
+]
