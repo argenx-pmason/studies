@@ -1,17 +1,21 @@
 [
   "Head Programming",
   "Lead Project Programmer",
-  "Lead QC Programmer",
-  "QC Programmer",
+  "Technical Programming Team Lead",
+  "Lead CRO Oversight Programmer",
+  "CRO Oversight Programmer",
   "Narratives",
   "QC Narratives",
   "Graphics (R)",
   "Graphics (SAS)",
   "Patient Profiles",
+  "QC Patient Profiles",
   "In-Text Tables",
   "GMA Programmer",
+  "QC GMA Programmer",
   "Technical Programmer",
   "Statistician",
+  "Pharmacologist",
   "Other",
   "Unknown"
 ]

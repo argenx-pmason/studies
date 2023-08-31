@@ -1,18 +1,47 @@
 [
   {
     "id": 1,
+    "prod_ind": "argx-113-pemphigus",
     "study": "ARGX-113-1904",
-    "role": "QC Programmer",
+    "role": "QC GMA Programmer",
     "name": "Anna Zaniewska",
-    "from": "2023/10/01",
+    "from": "2023/10/15",
     "to": "2023/11/01"
   },
   {
     "id": 2,
+    "prod_ind": "argx-113-pemphigus",
     "study": "ARGX-113-1904",
-    "role":"In-Text Tables",
+    "role": "In-Text Tables",
     "name": "Phil Mason",
     "from": "2023/10/01",
     "to": "2023/10/11"
+  },
+  {
+    "id": 3,
+    "prod_ind": "argx-113-pemphigus",
+    "study": "ARGX-113-1905",
+    "role": "In-Text Tables",
+    "name": "Phil Mason",
+    "from": "2023/09/01",
+    "to": "2023/09/11"
+  },
+  {
+    "id": 4,
+    "prod_ind": "argx-113-pemphigus",
+    "study": "ARGX-113-1905",
+    "role": "Lead Project Programmer",
+    "name": "Dirk Van Krunckelsven",
+    "from": "2023/09/5",
+    "to": "2023/10/11"
+  },
+  {
+    "id": 5,
+    "prod_ind": "argx-113-pemphigus",
+    "study": "ARGX-113-1905",
+    "role": "Jira man",
+    "name": "Dirk Van Krunckelsven",
+    "from": "2023/10/15",
+    "to": "2023/10/21"
   }
 ]

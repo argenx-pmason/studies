@@ -1,0 +1,874 @@
+[
+  {
+    "compound": "ARGX-110",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-110-1201",
+    "Protocol_name": "A Phase I study of ARGX-110 in patients with advanced malignancies expressing CD70.",
+    "Assigned_date": "2012",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-110",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-110-1401",
+    "Protocol_name": "A pilot, Phase Ib feasibility study of ARGX-110 in patients with nasopharyngeal carcinoma (NPC).",
+    "Assigned_date": "2014",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-110",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-110-1402",
+    "Protocol_name": "A Phase I/II study of ARGX-110 in patients with relapsed or refractory Waldenström’s Macroglobulinemia (WM)",
+    "Assigned_date": "2014",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-110",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-110-1601",
+    "Protocol_name": "A phase I/II, open label, dose-escalating study with expansion cohort to evaluate safety and tolerability of ascending intravenous doses of ARGX-110 in combination with azacytidine in patients with newly diagnosed Acute Myeloid Leukemia (AML) and high risk myelodysplastic syndrome",
+    "Assigned_date": "2016",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-110",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-110-1602",
+    "Protocol_name": "A phase Ib/II, open label study to evaluate safety, tolerability and efficacy of ARGX-110 in combination with romidepsin  in patients with relapsed or refractory  Hodgkin’s and non-Hodgkin’s lymphoma including cutaneous T-cell lymphoma (CTCL) and peripheral T-cell lymphoma (PTCL)",
+    "Assigned_date": "2016",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-110",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-110-1802",
+    "Protocol_name": "A Ph1 safety trial, with a triple combination with Venetoclax, 5aza and ARGX-110",
+    "Assigned_date": "2018",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-111",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-111-1301",
+    "Protocol_name": "A Phase 1b study of ARGX-111 in patients with advanced cancer over-expressing the c-Met protein.",
+    "Assigned_date": "2013",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1501",
+    "Protocol_name": "A Phase I, Randomized, Double-Blind, Placebo-Controlled, Single and Multiple Ascending Intravenous Dose Study to Assess the Safety, Tolerability, Pharmacokinetics, Pharmacodynamics and Immunogenicity of ARGX-113 in Healthy Males and Female Subjects of Non-Child Bearing Potential",
+    "Assigned_date": "2015",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1602",
+    "Protocol_name": "A randomized, double-blind, placebo-controlled phase II study to evaluate the efficacy and safety of intravenous doses of ARGX-113 in patients with generalized myasthenia gravis who have moderate muscle weakness despite treatment with immunosuppressants",
+    "Assigned_date": "2016",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1603",
+    "Protocol_name": "A randomized, double-blind, placebo-controlled, phase II study to evaluate the efficacy and safety of ARGX-113 in patients with newly diagnosed Immune Thrombocytopenia",
+    "Assigned_date": "2016",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1604",
+    "Protocol_name": "A Phase II POC Pemphigus study (no final title was assigned)",
+    "Assigned_date": "2016",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1701",
+    "Protocol_name": "An Open-label, Non-controlled, Phase II Study to Evaluate the Safety, Pharmacodynamics, Pharmacokinetics, Efficacy and Conditions of Use of ARGX-113 in Patients with Mild to Moderate Pemphigus (Vulgaris or Foliaceus)",
+    "Assigned_date": "2017",
+    "STATUS": "COMPLETED"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1702",
+    "Protocol_name": "A randomized, open-label, parallel group study to compare the pharmacokinetics, pharmacodynamics and safety of a subcutaneous formulation with an intravenous formulation of ARGX-113 in healthy male subjects",
+    "Assigned_date": "2017",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1703",
+    "Protocol_name": "A phase-1 bridging study with Japanese volunteers (no final title was assigned)",
+    "Assigned_date": "2017",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1704",
+    "Protocol_name": "A Randomized, Double-Blind, Placebo-Controlled, Multicenter Phase 3 Trial to Evaluate the Efficacy, Safety and Tolerability of ARGX-113 in Patients with Myasthenia Gravis Having Generalized Muscle Weakness (ADAPT)",
+    "Assigned_date": "2017",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1705",
+    "Protocol_name": "A Long-Term, Single-Arm, Open-Label, Multicenter, Phase 3 Follow-on Trial of\r\nARGX-113-1704 to Evaluate the Safety and Tolerability of ARGX-113 in Patients with Myasthenia Gravis having Generalized Muscle Weakness (ADAPT+)",
+    "Assigned_date": "2017",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1801",
+    "Protocol_name": "A Phase 3 multicentre, randomized, double-blind, placebo-controlled trial to evaluate the efficacy and safety of efgartigimod (ARGX-113) 10 mg/kg Intravenous in adult patients with primary immune thrombocytopenia (ADVANCE)",
+    "Assigned_date": "2018",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1802",
+    "Protocol_name": "A Phase 2 Trial to Investigate the Efficacy, Safety, and Tolerability of Efgartigimod PH20 SC in Adult Patients with Chronic Inflammatory Demyelinating Polyneuropathy (CIDP) (ADHERE)",
+    "Assigned_date": "2018",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1803",
+    "Protocol_name": "A Phase 3 multicenter, open-label, long-term trial to evaluate the safety and efficacy of efgartigimod (ARGX-113) 10mg/kg Intravenous in adult patients with primary immune thrombocytopenia (ADVANCE+)",
+    "Assigned_date": "2018",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1804",
+    "Protocol_name": "A multicentre, open-label, single-arm Phase II trial to evaluate the safety, tolerability, and activity of efgartigimod (ARGX-113) 10 mg/kg IV and 300 mg SC in adult patients with primary immune thrombocytopenia",
+    "Assigned_date": "2018",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1901",
+    "Protocol_name": "A Phase 1, Randomized, Open-label, Parallel-group Trial to Investigate the Pharmacodynamics, Pharmacokinetics, Safety, and Tolerability of Different Single Subcutaneous Dose Levels of Efgartigimod Co-administered with rHuPH20 in Healthy Adult Male Subjects",
+    "Assigned_date": "2019",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1902",
+    "Protocol_name": "Open-label Extension of the ARGX-113-1802 Trial to Investigate the Long-term Safety, Tolerability, and Efficacy of Efgartigimod PH20 SC in Patients with Chronic Inflammatory Demyelinating Polyneuropathy (CIDP) (ADHERE+)",
+    "Assigned_date": "2019",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1903",
+    "Protocol_name": "A Phase 3, Multicenter, Randomized, Double-Blinded, Placebo-Controlled Trial to Evaluate the Maintenance of Efficacy and the Safety of Subcutaneous Efgartigimod (ARGX-113) After Response to Intravenous Efgartigimod in Adult Patients With Primary Immune Thrombocytopenia (ADVANCE SC)",
+    "Assigned_date": "2019",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1904",
+    "Protocol_name": "A Randomized, Double-Blinded, Placebo-Controlled Trial to Investigate the Efficacy, Safety, and Tolerability of Efgartigimod PH20 SC in Adult Patients With Pemphigus (Vulgaris or Foliaceus) (ADDRESS)",
+    "Assigned_date": "2019",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1905",
+    "Protocol_name": "An Open-Label, Multicenter, Follow-up Trial of ARGX-113-1904 to Evaluate the Safety, Tolerability, and Efficacy of Efgartigimod PH20 SC in Patients With Pemphigus (ADDRESS+)",
+    "Assigned_date": "2019",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1906",
+    "Protocol_name": "A Phase 3, Multicenter, Open-Label, Long-Term Trial to Evaluate the Safety and the Maintenance of Efficacy of Efgartigimod (ARGX-113) in Adult Patients With Primary Immune Thrombocytopenia (ADVANCE SC+)",
+    "Assigned_date": "2019",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1907",
+    "Protocol_name": "A Phase 1, Randomized, Open-Label, Parallel-Group Study to Compare Pharmacodynamics, Pharmacokinetics, Safety, and Tolerability of Multiple Intravenous Infusions of Efgartigimod with Multiple Subcutaneous Injections of Efgartigimod PH20 SC in Healthy Subjects.",
+    "Assigned_date": "2019",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-1908",
+    "Protocol_name": "A Phase 3, Multicenter, Randomized, Double-Blinded, Placebo-Controlled Trial to Evaluate the Efficacy and Safety of Efgartigimod (ARGX 113) 10 mg/kg Intravenous in Adult Patients With Primary Immune Thrombocytopenia",
+    "Assigned_date": "2019",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2001",
+    "Protocol_name": "A Phase 3, Randomized, Open-Label, Parallel-Group Study to Compare the Pharmacodynamics, Pharmacokinetics, Efficacy, Safety, Tolerability, and Immunogenicity of Multiple Subcutaneous Injections of Efgartigimod PH20 SC with Multiple Intravenous Infusions of Efgartigimod in Patients with Generalized Myasthenia Gravis",
+    "Assigned_date": "2020",
+    "STATUS": "completed"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2002",
+    "Protocol_name": "A Long-Term, Single Arm, Open-Label, Multicenter, Phase 3 Extension Study of ARGX-113-2001 to Evaluate the Safety and Tolerability of Multiple Subcutaneous Injections of Efgartigimod PH20 SC in Patients with Generalized Myasthenia Gravis",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2003",
+    "Protocol_name": "An open-label, single arm, phase 4 trial to evaluate real world dosing to maintain clinical benefit of efgartigimod in myasthenia gravis.",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2004",
+    "Protocol_name": "A Phase 3, Multicenter, Randomized, Double-Blinded, Placebo\u001AControlled Trial to Evaluate the Efficacy and the Safety of Efgartigimod (ARGX-113) PH20 Subcutaneous in Adult Patients With Primary Immune Thrombocytopenia (ADVANCE SC)",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2005",
+    "Protocol_name": "A Phase 3, Multicenter, Open-Label, Long-term Trial to Evaluate the Safety and Efficacy of Efgartigimod (ARGX\u001A113) PH20 Subcutaneous in Adult Patients With Primary Immune Thrombocytopenia (ADVANCE SC+)",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2006",
+    "Protocol_name": "MG pediatric study",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2007",
+    "Protocol_name": "A Phase2/3 trial in subgroup(s) (tbd which subgroups) of myositis",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2008",
+    "Protocol_name": "OL extension study to 113-2006 MG pediatric study",
+    "Assigned_date": "2020",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2009",
+    "Protocol_name": "A Phase 2/3, Randomized, Double-Blinded, Placebo-Controlled, Parallel-Group Study to Investigate the Efficacy and Safety of Efgartigimod PH20 SC in Adult Participants With Bullous Pemphigoid",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2010",
+    "Protocol_name": "Ph2/3 OLE study to 113-2009 BP",
+    "Assigned_date": "2020",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2011",
+    "Protocol_name": "OLE to 113-2007 Myositis",
+    "Assigned_date": "2020",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2102",
+    "Protocol_name": "A Randomized, Open-label, Placebo-Controlled, Parallel-Group Study to Evaluate the Immune Response to the Polyvalent Pneumococcal Vaccine (PNEUMOVAX 23) in Healthy Participants Receiving Intravenous Efgartigimod or Placebo",
+    "Assigned_date": "2021",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2103",
+    "Protocol_name": "A Randomized, Double-Blinded, Placebo-Controlled Phase 1 Study to   Investigate the Pharmacokinetics, Pharmacodynamics, Safety and    Tolerability of an Intravenous Formulation of Efgartigimod in Healthy Chinese Adult Subjects (Zai Protocol ZL-1103-005)",
+    "Assigned_date": "2021",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2104",
+    "Protocol_name": "A Phase\u001A2 randomized, double-blind placebo-controlled trial to evaluate the efficacy, safety, and tolerability of Efgartigimod IV in adult patients with Post COVID-19 Postural Orthostatic Tachycardia Syndrome (POTS)",
+    "Assigned_date": "2021",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2105",
+    "Protocol_name": "An Open-Label Extension Study to Evaluate the Long term Safety and Efficacy of Efgartigimod in Adult Patients with Post-COVID-19 Postural Orthostatic Tachycardia Syndrome (PC-POTS) who Completed Study ARGX 113-2104",
+    "Assigned_date": "2021",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2106",
+    "Protocol_name": "A Phase 2, Randomized, Placebo-Controlled, Parallel-Group, Double-Blinded, Proof-of-Concept Study to Evaluate the Safety and Efficacy of Intravenous Efgartigimod in Adult Participants With Primary Sjögren’s Syndrome",
+    "Assigned_date": "2021",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2107",
+    "Protocol_name": "A Randomized, Double-Blinded and Placebo-Controlled Phase 1 Study to Investigate the Pharmacokinetics, Pharmacodynamics, Safety and Tolerability of Efgartigimod SC Co-formulated with rHuPH20 in Healthy Chinese Adult Subjects (Zai Protocol ZL-1103-006)",
+    "Assigned_date": "2021",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2201",
+    "Protocol_name": "A Phase 1, Open-label, Parallel-Group Study to Evaluate the Pharmacokinetics of Efgartigimod IV 10 mg/kg Single Dose Administered in Participants With Renal Impairment",
+    "Assigned_date": "2022",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2202",
+    "Protocol_name": "A Multicenter, Randomized, Double-Blinded, Placebo-Controlled, Proof-of-Concept Study to Evaluate the Efficacy and Safety of Efgartigimod in Chinese Patients With Lupus Nephritis (Zai Protocol No.: ZL-1103-013)",
+    "Assigned_date": "2022",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2203",
+    "Protocol_name": "A Multi-Center, Randomized, Double-Blind, Placebo-Controlled, Proof-of-Concept Study to Evaluate the Efficacy and Safety of Efgartigimod in Chinese Patients With Primary Membranous Nephropathy (Zai Protocol No.: ZL-1103-014)",
+    "Assigned_date": "2022",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2204",
+    "Protocol_name": "A Phase 1, Randomized, Open-label, Parallel-Group, Single-Dose, Bioequivalence Study of Efgartigimod PH20 SC Administered via a Prefilled Syringe Versus a Vial-Syringe Presentation in Healthy Adults",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2207",
+    "Protocol_name": "MG SC pediatric study",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2210",
+    "Protocol_name": "A randomized, double-blinded, phase 3 study evaluating the efficacy and safety of efgartigimod PH20 SC administered once weekly or once every 2 weeks in adult participants with chronic inflammatory demyelinating polyneuropathy (CIDP)",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2211",
+    "Protocol_name": "An Open-Label Extension Study to Evaluate the Safety of Efgartigimod in Adult Patients with primary Sjogrens Syndrome (pSS) who complete qualifying efgartigimod pSS studies",
+    "Assigned_date": "2022",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2212",
+    "Protocol_name": "A phase 2 randomized, double-blinded, placebo-controlled study to evaluate the efficacy and safety of efgartigimod in adult patients with Anti-neutrophil cytoplasmic antibody (ANCA) Associated Vasculitis (AAV)",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2213",
+    "Protocol_name": "An Open-Label Extension Study to Evaluate the Safety of Efgartigimod in Adult Patients with Anti-neutrophil cytoplasmic antibody (ANCA) Associated Vasculitis (AAV) who completed Study ARGX 113-2212",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2301",
+    "Protocol_name": "A phase 3, multicenter, randomized,  double-blinded, placebo-controlled  study evaluating Efgartigimod  PH20 SC administered by prefilled syringe (PFS) treatment in patients with moderate-to-severe active Thyroid Eye Disease (TED)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2302",
+    "Protocol_name": "Antibody Mediated Rejection (AMR)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2303",
+    "Protocol_name": "A phase 1, single-center, randomized, open-label, crossover study in healthy adults to assess the feasibility of different speeds of subcutaneous injection for efgartigimod PH20 SC (formerly known as Autoinjector study)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2304",
+    "Protocol_name": "A phase 3 randomized, double-blinded, placebo-controlled study to evaluate the efficacy and safety of efgartigimod PH20 SC administered by prefilled syringe (PFS) in adult patients with post–COVID-19 postural orthostatic tachycardia syndrome (POTS)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2305",
+    "Protocol_name": "A phase 3 randomized, double-blinded, placebo-controlled study to evaluate the efficacy and safety of efgartigimod PH20 SC administered by prefilled syringe (PFS) in adult patients with post–COVID-19 postural orthostatic tachycardia syndrome (POTS)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2306",
+    "Protocol_name": "A phase 3 randomized, double-blinded, placebo-controlled study to evaluate the efficacy, safety, and tolerability of efgartigimod PH20 SC administered by prefilled syringe (PFS) in adult patients with primary sjogren’s syndrome (pSS)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2307",
+    "Protocol_name": "A phase 3 randomized, double-blinded, placebo-controlled study to evaluate the efficacy, safety, and tolerability of efgartigimod PH20 SC administered by prefilled syringe (PFS) in adult patients with primary sjogren’s syndrome (pSS)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2308",
+    "Protocol_name": "A randomized, double-blinded, placebo-controlled, phase 3, crossover trial evaluating the efficacy and safety of efgartigimod PH20 SC in adult participants with acetylcholine receptor binding antibody (AChR-Ab) negative generalized myasthenia gravis (gMG)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2309",
+    "Protocol_name": "TED phase 3 main study",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2310",
+    "Protocol_name": "TED OLE study",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2311",
+    "Protocol_name": "Open-Label Extension Study to Evaluate the Long-term Safety and Efficacy of Efgartigimod in Adult Patients with Post-COVID-19 Postural Orthostatic Tachycardia Syndrome (PC-POTS) who Completed a qualifying study",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-2312",
+    "Protocol_name": "new phase 1 study (bioequivalence)",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-EAP-2101",
+    "Protocol_name": "MG PAA",
+    "Assigned_date": "2021",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-EAP-2205",
+    "Protocol_name": "PV PAA",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-NIS-2209",
+    "Protocol_name": "Non-interventional, prospective study to understand real world use of efgartigimod in the treatment of generalised myasthenia gravis in Germany and Austria.",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-PAC-2206",
+    "Protocol_name": "Pregnancy Registry Study",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-113-PASS-2208",
+    "Protocol_name": "A non-interventional, post-authorisation safety study of patients treated with efgartigimod.",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9001",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1602, ARGX-113-1603, ARGX-113-1704 and ARGX-113-1705 for initial BLA in Myasthenia Gravis",
+    "Assigned_date": "2020",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9002",
+    "Protocol_name": "Pooling of efficacy data of ARGX-113-1602, ARGX-113-1704 and ARGX-113-1705 for initial BLA in Myasthenia Gravis",
+    "Assigned_date": "2020",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9003",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-1602, ARGX-113-1704 and ARGX-113-1705 for initial BLA in Myasthenia Gravis",
+    "Assigned_date": "2020",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9004",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1602, ARGX-113-1704 and ARGX-113-1705 for 90 days BLA safety update in Myasthenia Gravis",
+    "Assigned_date": "2020",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9005",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-1602, ARGX-113-1704 and ARGX-113-1705 for 90 days BLA safety update in Myasthenia Gravis",
+    "Assigned_date": "2020",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9006",
+    "Protocol_name": "Integrated analysis safety plan on the effect of efgartigimod on vaccines",
+    "Assigned_date": "2020",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9011",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1602, ARGX-113-1603, ARGX-113-1704 and ARGX-113-1705 for initial MAA in Myasthenia Gravis",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9012",
+    "Protocol_name": "Pooling of efficacy data of ARGX-113-1602, ARGX-113-1704 and ARGX-113-1705 for initial MAA in Myasthenia Gravis",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9013",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-1602, ARGX-113-1704 and ARGX-113-1705 for initial MAA in Myasthenia Gravis",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9021",
+    "Protocol_name": "Pooling of safety data of ARGX-113-2001 and ARGX-113-2002 for initial MG EFG PH20 SC BLA",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9022",
+    "Protocol_name": "Additional analysis to support clinical summary of Efficacy and Pharmacology in initial MG EFG PH20 SC BLA",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9023",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-2001 and ARGX-113-2002 for initial MG EFG PH20 SC BLA",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9025",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-2001 and ARGX-113-2002 for 90 days safety update in Myasthenia Gravis",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9031",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1602, ARGX-113-1704 and ARG-113-1705 (cut-off Jan 2022)",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9101",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1801 and ARGX-113-1803 for BLA in ITP (iv)",
+    "Assigned_date": "2021",
+    "STATUS": "reactivated"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9102",
+    "Protocol_name": "Additional analysis to support clinical summary of efficacy for ITP EFG IV Global",
+    "Assigned_date": "2023",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9103",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-1801 and ARGX-113-1803 for BLA in ITP (iv)",
+    "Assigned_date": "2021",
+    "STATUS": "reactivated"
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9111",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1801, ARGX-113-1803, ARGX-113-2004 and ARGX-113-2005 for BLA in ITP (IV/SC)",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9112",
+    "Protocol_name": "Pooling of efficacy data of ARGX-113-1801, ARGX-113-1803, ARGX-113-2004 and ARGX-113-2005 for BLA in ITP (IV/SC)",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9113",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-1801, ARGX-113-1803, ARGX-113-2004 and ARGX-113-2005 for BLA in ITP (IV/SC)",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9201",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1904 and ARGX-113-1905 for (s)BLA in Pemphigus",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9202",
+    "Protocol_name": "Pooling of efficacy data of ARGX-113-1904 and ARGX-113-1905 for (s)BLA in Pemphigus",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9203",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-1904 and ARGX-113-1905 for (s)BLA in Pemphigus",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9211",
+    "Protocol_name": "Pooling of safety data of ARGX-113-1904 and ARGX-113-1905 for Type 2 in Pemphigus",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9212",
+    "Protocol_name": "Pooling of efficacy data of ARGX-113-1904 and ARGX-113-1905 for Type 2 in Pemphigus",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9213",
+    "Protocol_name": "Pooling of immunogenicity data of ARGX-113-1904 and ARGX-113-1905 for Type 2 in Pemphigus",
+    "Assigned_date": "2021",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9301",
+    "Protocol_name": "ISS for CIDP BLA",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-113",
+    "studycat": "POOLING",
+    "STUDY": "ARGX-113-9303",
+    "Protocol_name": "ISI for CIDP BLA",
+    "Assigned_date": "2022",
+    "STATUS": ""
+  },
+  {
+    "compound": "ARGX-117",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-117-1901",
+    "Protocol_name": "A First-In-Human, Randomized, Double-Blinded, Placebo-Controlled Trial in Healthy Subjects to Investigate the Safety, Tolerability, Pharmacokinetics, Pharmacodynamics, and Immunogenicity of Single and Multiple Ascending Intravenous and Subcutaneous Doses of ARGX-117",
+    "Assigned_date": "2019",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-117",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-117-2001",
+    "Protocol_name": "A First-in-Human Study in Adult Subjects Hospitalized with COVID-19 infection to investigate the Safety, Tolerability, Pharmacokinetics, Pharmacodynamics, Immunogenicity, and Efficacy of ARGX-117",
+    "Assigned_date": "2020",
+    "STATUS": "stopped"
+  },
+  {
+    "compound": "ARGX-117",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-117-2002",
+    "Protocol_name": "A Phase 2, Randomized, Double-Blinded, Placebo-Controlled, Parallel-Group, Multicenter Trial to Evaluate the Safety and Tolerability, Efficacy, Pharmacokinetics, Pharmacodynamics, and Immunogenicity of 2 Dose Regimens of ARGX-117 in Adults With Multifocal Motor Neuropathy",
+    "Assigned_date": "2020",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-117",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-117-2003",
+    "Protocol_name": "A Long Term Extension of the ARGX-117-2002 trial to Evaluate the Long-Term Safety and Tolerability, Efficacy, Pharmacodynamics, Pharmacokinetics, and Immunogenicity of ARGX-117 in Adults with Multifocal Motor Neuropathy",
+    "Assigned_date": "2020",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-117",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-117-2201",
+    "Protocol_name": "A Phase 2 Multicenter, Randomized, Double-Blinded, Placebo-\r\nControlled Study to Assess the Efficacy and Safety of ARGX-117 in Preventing Delayed\r\nGraft Function and Improving Short Term and Long Term Allograft Function in Recipients\r\nof a Renal Allograft From High-Risk, Deceased Donor Transplants",
+    "Assigned_date": "2022",
+    "STATUS": "startup"
+  },
+  {
+    "compound": "ARGX-117",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-117-2202",
+    "Protocol_name": "natural history study in MMN",
+    "Assigned_date": "2022",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-117",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-117-2301",
+    "Protocol_name": "A Phase 2, Randomized, Double-Blind, Placebo-Controlled Trial of empasiprubart (ARGX-117) in Patients with Dermatomyositis",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-119",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-119-2201",
+    "Protocol_name": "A First-in-Human, Randomized, Double-Blind, Placebo-Controlled Trial in Healthy Subjects to Investigator the Safety, Tolerability, Pharmacokinetics and Immunogenicity of Single and Multiple Ascending Intravenous Dose Levels of ARGX-119.",
+    "Assigned_date": "2022",
+    "STATUS": "ongoing"
+  },
+  {
+    "compound": "ARGX-119",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-119-2301",
+    "Protocol_name": "A Pre-Screening and Recruitment Study in Adults with DOK7- Congenital Myasthenic Syndrome Expressing Interest in a Later Phase 1b Study",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  },
+  {
+    "compound": "ARGX-119",
+    "studycat": "INDIVIDUAL",
+    "STUDY": "ARGX-119-2302",
+    "Protocol_name": "A Phase 1b Double Blinded Randomized Controlled Study of ARGX-119 in Patients with DOK7-Congenital Myasthenic Syndrome",
+    "Assigned_date": "2023",
+    "STATUS": "planning"
+  }
+]

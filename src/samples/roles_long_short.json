@@ -1,0 +1,21 @@
+{
+  "Head Programming": "Head Prg",
+  "Lead Project Programmer": "Lead Proj Prg",
+  "Technical Programming Team Lead": "Tech Prg Lead",
+  "Lead CRO Oversight Programmer": "Lead CRO Oversight Prg",
+  "CRO Oversight Programmer": "CRO Oversight Prg",
+  "Narratives": "Narratives",
+  "QC Narratives": "QC Narratives",
+  "Graphics (R)": "R Graphics",
+  "Graphics (SAS)": "SAS Graphics",
+  "Patient Profiles": "Patient Profiles",
+  "QC Patient Profiles": "QC Patient Profiles",
+  "In-Text Tables": "In-Text",
+  "GMA Programmer": "GMA Prg",
+  "QC GMA Programmer": "QC GMA Prg",
+  "Technical Programmer": "Technical Prg",
+  "Statistician": "Stat",
+  "Pharmacologist": "Pharmacologist",
+  "Other": "Other",
+  "Unknown": "Unknown"
+}
