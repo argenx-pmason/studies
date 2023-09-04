@@ -440,13 +440,15 @@ function SetKeyDates(props) {
             />
           ))
         : null} */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={10000}
-        onClose={handleCloseSnackbar}
-        message={messages}
-        // action={action}
-      />
+      {messages && messages.length > 1 && (
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={10000}
+          onClose={handleCloseSnackbar}
+          message={messages}
+          // action={action}
+        />
+      )}
 
       {/* Dialog with General info about this screen */}
       <Dialog fullWidth onClose={() => setOpenInfo(false)} open={openInfo}>
