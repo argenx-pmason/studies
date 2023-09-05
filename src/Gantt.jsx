@@ -11,6 +11,7 @@ import {
 import { Info } from "@mui/icons-material";
 import Highcharts from "highcharts";
 import highchartsGantt from "highcharts/modules/gantt";
+import highchartsMore from "highcharts/highcharts-more";
 import HighchartsReact from "highcharts-react-official";
 import { getJsonFile } from "./utility";
 import localStudiesInfoJson from "./samples/studies_info.json"; // made with SAS program
@@ -23,6 +24,7 @@ import localColorsForMilestonesJson from "./samples/colors_for_milestones.json";
 
 // initialize the module
 highchartsGantt(Highcharts);
+highchartsMore(Highcharts);
 
 function Gantt(props) {
   const { type } = props,
@@ -61,7 +63,7 @@ function Gantt(props) {
         milestone: milestone,
         parent: parent,
         role: role,
-        opacity: 0.7,
+        opacity: milestone ? 0.75 : 0.5,
         what: null,
         level: level,
       };
@@ -93,9 +95,30 @@ function Gantt(props) {
 
   // when all data is loaded setup everything needed for the Gantt chart(s)
   useEffect(() => {
-    if (info === null || rolesLongShort === null || eventsToInclude === null)
+    // console.log(
+    //   "start of useeffect - ",
+    //   "type",
+    //   type,
+    //   "info",
+    //   info,
+    //   "rolesLongShort",
+    //   rolesLongShort,
+    //   "eventsToInclude",
+    //   eventsToInclude,
+    //   "keyDates",
+    //   keyDates
+    // );
+    if (
+      info === null ||
+      keyDates === null ||
+      studiesInfo === null ||
+      userHolidays === null ||
+      rolesLongShort === null ||
+      eventsToInclude === null ||
+      colorsForMilestones === null
+    )
       return;
-    console.log("info", info);
+    // console.log("info", info);
 
     // apply shorter names for roles (we expect a role in rolesLongShort for every role in info)
     info.forEach((i) => {
@@ -136,29 +159,41 @@ function Gantt(props) {
         return res;
       }, {});
 
-    // Lower level data - get main data for each line of gantt chart (study or person gantt)
-    const seriesData = info.map((i) => {
-      // id, study, name, from, to, milestone, parent, role
-      return ganttItem(
-        i.id,
-        i.study,
-        i.name,
-        i.from,
-        i.to,
-        false,
-        type === "study" ? i.study : i.prod_ind + "/" + i.name,
-        i.role,
-        3
-      );
-    });
+    // LOWER LEVEL data - get main data for each line of gantt chart (study or person gantt)
+    // console.log(info);
+    let sortedInfo = [...info].sort((a, b) => {
+        if (a.name + a.study.toUpperCase() > a.name + b.study.toUpperCase())
+          return 1;
+        else if (
+          a.name + a.study.toUpperCase() <
+          a.name + b.study.toUpperCase()
+        )
+          return -1;
+        else return 0;
+      }),
+      seriesData = sortedInfo.map((i) => {
+        // id, study, name, from, to, milestone, parent, role
+        return ganttItem(
+          i.id,
+          i.study,
+          i.name,
+          i.from,
+          i.to,
+          false,
+          type === "study" ? i.study : i.prod_ind + "/" + i.name,
+          i.role,
+          "3"
+        );
+      });
+    // console.log(sortedInfo);
 
-    // Mid level data - add parent lines in gantt
+    // MID LEVEL data - add parent lines in gantt
     const indications = new Set(),
       studies = new Set();
     Object.keys(minStudy).forEach((k) => {
       studies.add(k);
     });
-    console.log("studies", studies);
+    // console.log("studies", studies);
     if (type === "study") {
       Object.keys(minStudy).forEach((k) => {
         // console.log("k", k);
@@ -175,7 +210,7 @@ function Gantt(props) {
             false,
             studiesInfo[k],
             null,
-            2
+            "2b"
           )
         );
       });
@@ -193,13 +228,13 @@ function Gantt(props) {
             parent: i.name,
             role: null,
             what: null,
-            level: 2,
+            level: "2b",
           });
       });
     }
     // console.log("indications", indications, "seriesData", seriesData);
 
-    // Top level data
+    // TOP LEVEL data
     // add product/indication parent lines
     if (type === "study") {
       indications.forEach((ind) => {
@@ -214,7 +249,7 @@ function Gantt(props) {
           parent: null,
           role: null,
           what: null,
-          level: 1,
+          level: "1",
         });
       });
     } else if (type === "person") {
@@ -231,7 +266,7 @@ function Gantt(props) {
             false,
             null,
             null,
-            1
+            "1"
           )
         );
       });
@@ -239,11 +274,13 @@ function Gantt(props) {
 
     // add KEY DATES to show on gantt
     if (type === "study") {
+      // console.log("keyDates", keyDates, "eventsToInclude", eventsToInclude);
       studies.forEach((s) => {
         const studyData = keyDates.filter((k) => k.study === s)[0];
         eventsToInclude.forEach((e, eid) => {
           // get the figure
-          const date = new Date(studyData[e]);
+          const date =
+            studyData && e in studyData ? new Date(studyData[e]) : null;
           // const date = 1696015800000;
           // console.log("s", s, "e", e, "studyData[e]", studyData[e], "eid", eid);
           seriesData.push({
@@ -256,10 +293,10 @@ function Gantt(props) {
             role: null,
             what: e,
             color:
-              eid < colorsForMilestones.length
+              colorsForMilestones && eid < colorsForMilestones.length
                 ? colorsForMilestones[eid]
                 : "gray",
-            level: 2,
+            level: "2a",
             // tooltip: {
             //   headerFormat:
             //     '<span style="font-size: 1.8em">{series.name}</span><br/>',
@@ -297,7 +334,7 @@ function Gantt(props) {
             parent: null,
             role: null,
             what: null,
-            level: 1,
+            level: "1",
             // color: "gray",
             // tooltip: {
             //   headerFormat:
@@ -320,7 +357,7 @@ function Gantt(props) {
           parent: h.name,
           role: "H",
           what: null,
-          level: 2,
+          level: "2a",
           // color: "gray",
           // tooltip: {
           //   headerFormat:
@@ -328,18 +365,21 @@ function Gantt(props) {
           // },
         });
       });
-      // seriesData.sort((a, b) => a.level - b.level || a.id < b.id);
-      seriesData.sort((a, b) => {
-        let x = a.level + a.id,
-          y = b.level + b.id,
-          z = x < y ? -1 : x > y ? 1 : 0;
-        return z;
-      });
-      // console.log("seriesData", seriesData);
     }
 
+    // sort the data into a suitable sequence
+    // seriesData.sort((a, b) => a.level - b.level || a.id < b.id);
+    seriesData.sort((a, b) => {
+      const key1 = a.level + a.name,
+        key2 = b.level + b.name;
+      if (key1 > key2) return 1;
+      else if (key1 < key2) return -1;
+      else return 0;
+    });
+    // console.log("sorted seriesData", seriesData);
+
     // define gantt chart settings
-    setChart({
+    const tempChart = {
       chart: {
         height: scrollable ? undefined : screenHeight - topMargin,
         // width: screenWidth * 0.8,
@@ -358,10 +398,15 @@ function Gantt(props) {
       },
       yAxis: {
         uniqueNames: true,
+        // max:3,
         staticScale: 20,
       },
       plotOptions: {
         series: {
+          // dataSorting: {
+          //   enabled: true,
+          //   sortKey: "name",
+          // },
           dataLabels: {
             enabled: true,
             format: "{point.role}",
@@ -407,6 +452,7 @@ function Gantt(props) {
         enabled: true,
         selected: 0,
       },
+      accessibility: { enabled: false },
       dataLabels: {
         formatter: function () {
           if (this.point.milestone) {
@@ -501,9 +547,19 @@ function Gantt(props) {
           }, "");
         },
       },
-    });
+    };
+    console.log("tempChart", tempChart);
+    setChart(tempChart);
     // eslint-disable-next-line
-  }, [info, scrollable]);
+  }, [
+    info,
+    keyDates,
+    studiesInfo,
+    userHolidays,
+    rolesLongShort,
+    eventsToInclude,
+    colorsForMilestones,
+  ]);
 
   return (
     <Box>
@@ -542,6 +598,12 @@ function Gantt(props) {
       <Dialog fullWidth onClose={() => setOpenInfo(false)} open={openInfo}>
         <DialogTitle>Info about this screen</DialogTitle>
         <DialogContent>
+          <p>Color key for milestones</p>
+          {colorsForMilestones && eventsToInclude && colorsForMilestones.map((color, colorIndex) => (
+            <ul style={{ color: color }}>
+              {color} = {eventsToInclude[colorIndex]}
+            </ul>
+          ))}
           <p>Data sources</p>
           <ul>
             <li>

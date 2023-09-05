@@ -95,17 +95,17 @@ export const updateJsonFile = (file, content) => {
 
 // get a JSON file and use setContent to content from file, or else to false
 export const getJsonFile = (file, setContent) => {
-  console.log("getJsonFile - file: ", file);
+  // console.log("getJsonFile - file: ", file);
   fetch(file)
     .then(function (response) {
-      console.log(response)
+      // console.log(response);
       if (response.type === "cors" || response.status !== 200) {
         setContent(false);
         return;
       }
       response.text().then(function (text) {
         const json = JSON.parse(text);
-        console.log("json", json);
+        // console.log("fetched: file=", file, "json=", json);
         setContent(json);
       });
     })
