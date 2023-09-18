@@ -40,6 +40,7 @@ function Gantt(props) {
     [eventsToInclude, setEventsToInclude] = useState(null),
     [colorsForMilestones, setColorsForMilestones] = useState(null),
     [scrollable, setScrollable] = useState(false),
+    [globalCollapse, setGlobalCollapse] = useState(false),
     filename = "key_dates.json",
     [keyDates, setKeyDates] = useState(null),
     dateFormat = Highcharts.dateFormat,
@@ -49,7 +50,18 @@ function Gantt(props) {
     // screenWidth = window.innerWidth,
     screenHeight = window.screen.availHeight,
     [chart, setChart] = useState(null),
-    ganttItem = (id, study, name, from, to, milestone, parent, role, level) => {
+    ganttItem = (
+      id,
+      study,
+      name,
+      from,
+      to,
+      milestone,
+      parent,
+      role,
+      level,
+      collapsed
+    ) => {
       const date1 = new Date(from),
         start = date1.getTime(),
         date2 = new Date(to),
@@ -66,6 +78,7 @@ function Gantt(props) {
         opacity: milestone ? 0.75 : 0.5,
         what: null,
         level: level,
+        collapsed: collapsed ? collapsed : false,
       };
     };
 
@@ -182,7 +195,8 @@ function Gantt(props) {
           false,
           type === "study" ? i.study : i.prod_ind + "/" + i.name,
           i.role,
-          "3"
+          "3",
+          globalCollapse
         );
       });
     // console.log(sortedInfo);
@@ -210,7 +224,8 @@ function Gantt(props) {
             false,
             studiesInfo[k],
             null,
-            "2b"
+            "2b",
+            globalCollapse
           )
         );
       });
@@ -229,6 +244,7 @@ function Gantt(props) {
             role: null,
             what: null,
             level: "2b",
+            collapsed: globalCollapse,
           });
       });
     }
@@ -250,13 +266,14 @@ function Gantt(props) {
           role: null,
           what: null,
           level: "1",
+          collapsed: globalCollapse,
         });
       });
     } else if (type === "person") {
       Object.keys(minPerson).forEach((k) => {
         // console.log("k", k);
         seriesData.push(
-          // id, study, name, from, to, milestone, parent, role
+          // id, study, name, from, to, milestone, parent, role, level, collapsed
           ganttItem(
             k,
             k,
@@ -266,7 +283,8 @@ function Gantt(props) {
             false,
             null,
             null,
-            "1"
+            "1",
+            globalCollapse
           )
         );
       });
@@ -297,6 +315,7 @@ function Gantt(props) {
                 ? colorsForMilestones[eid]
                 : "gray",
             level: "2a",
+            collapsed: globalCollapse,
             // tooltip: {
             //   headerFormat:
             //     '<span style="font-size: 1.8em">{series.name}</span><br/>',
@@ -335,6 +354,7 @@ function Gantt(props) {
             role: null,
             what: null,
             level: "1",
+            collapsed: globalCollapse,
             // color: "gray",
             // tooltip: {
             //   headerFormat:
@@ -358,6 +378,7 @@ function Gantt(props) {
           role: "H",
           what: null,
           level: "2a",
+          collapsed: globalCollapse,
           // color: "gray",
           // tooltip: {
           //   headerFormat:
@@ -559,6 +580,7 @@ function Gantt(props) {
     rolesLongShort,
     eventsToInclude,
     colorsForMilestones,
+    globalCollapse,
   ]);
 
   return (
@@ -578,9 +600,19 @@ function Gantt(props) {
           </Tooltip>
           <Tooltip title="Toggle chart scrolling">
             <Checkbox
+              color={"success"}
               checked={scrollable}
               onChange={() => {
                 setScrollable(!scrollable);
+              }}
+            />
+          </Tooltip>
+          <Tooltip title="Toggle collapse everything">
+            <Checkbox
+              checked={globalCollapse}
+              color={"warning"}
+              onChange={() => {
+                setGlobalCollapse(!globalCollapse);
               }}
             />
           </Tooltip>
@@ -599,11 +631,13 @@ function Gantt(props) {
         <DialogTitle>Info about this screen</DialogTitle>
         <DialogContent>
           <p>Color key for milestones</p>
-          {colorsForMilestones && eventsToInclude && colorsForMilestones.map((color, colorIndex) => (
-            <ul style={{ color: color }}>
-              {color} = {eventsToInclude[colorIndex]}
-            </ul>
-          ))}
+          {colorsForMilestones &&
+            eventsToInclude &&
+            colorsForMilestones.map((color, colorIndex) => (
+              <ul key={colorIndex} style={{ color: color }}>
+                {color} = {eventsToInclude[colorIndex]}
+              </ul>
+            ))}
           <p>Data sources</p>
           <ul>
             <li>

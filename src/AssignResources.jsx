@@ -337,6 +337,7 @@ function AssignResources(props) {
   // load initial files
   useEffect(() => {
     if (mode === "local") {
+      console.log("loading local files");
       setRows(localAssignmentsJson); // sample data for users assigned to studies
       setStudiesInfo(localStudiesInfoJson); // sample data for studies info mapping indications to studies
       setStudies(localAllStudiesJson.sort()); // sample list of all studies
@@ -345,6 +346,7 @@ function AssignResources(props) {
       setFutureUsers(localFutureUsersJson.sort()); // sample list of future users
       setDeletedUsers(localDeletedUsersJson.sort()); // sample list of deleted users
     } else {
+      console.log("loading remote files from " + userJsonDir);
       getJsonFile(userJsonDir + "/assignments.json", setRows); // data for users assigned to studies
       getJsonFile(userJsonDir + "/studies_info.json", setStudiesInfo); // data for users assigned to studies
       getJsonFile(userJsonDir + "/all_studies.json", setStudies); // List of all studies
@@ -358,8 +360,10 @@ function AssignResources(props) {
 
   // make list of users with all users, adding future users and then removing deleted users
   useEffect(() => {
-    const tempUsers = [...localAllUsersJson, ...localFutureUsersJson].filter(
-      (u) => !localDeletedUsersJson.includes(u)
+    if (allUsers === null || futureUsers === null || deletedUsers === null)
+      return;
+    const tempUsers = [...allUsers, ...futureUsers].filter(
+      (u) => !deletedUsers.includes(u)
     );
     setUsers(tempUsers.sort()); // list of all users with futures added and deleted removed
   }, [allUsers, futureUsers, deletedUsers]);
