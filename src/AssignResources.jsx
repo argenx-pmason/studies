@@ -8,8 +8,8 @@ import {
   DialogContent,
   Menu,
   MenuItem,
-  // Select,
 } from "@mui/material";
+import Select from "react-select";
 import {
   Add,
   Edit,
@@ -18,6 +18,8 @@ import {
   Cancel,
   CloudDownload,
   Info,
+  AddCircle,
+  AddCircleOutline,
 } from "@mui/icons-material";
 import {
   GridRowModes,
@@ -37,6 +39,7 @@ import localAllUsersJson from "./samples/all_users.json"; // created from spread
 import localFutureUsersJson from "./samples/future_users.json"; // made manually
 import localDeletedUsersJson from "./samples/deleted_users.json"; // made manually
 import localStudiesInfoJson from "./samples/studies_info.json"; // made with SAS program
+import localAllIndicationsJson from "./samples/all_indications.json"; // generated from SAS dataset &_SASWS_\general\biostat\metadata\projects\rm\all_indications
 import { LicenseInfo } from "@mui/x-data-grid-pro";
 // import Gantt from "./Gantt";
 // apply the license for data grid
@@ -52,7 +55,8 @@ LicenseInfo.setLicenseKey(
  */
 function AssignResources(props) {
   // define variables
-  const { href } = window.location,
+  const username = props.tempUsername,
+    { href } = window.location,
     mode = href.startsWith("http://localhost") ? "local" : "remote",
     [rows, setRows] = useState(null),
     [roles, setRoles] = useState(null),
@@ -67,7 +71,15 @@ function AssignResources(props) {
     [rowModesModel, setRowModesModel] = useState({}),
     userJsonDir = webDavPrefix + "/general/biostat/metadata/projects/rm",
     [openInfo, setOpenInfo] = useState(false),
-    [anchorEl, setAnchorEl] = useState(null);
+    [anchorEl, setAnchorEl] = useState(null),
+    [indications, setIndications] = useState(null),
+    [openAddIndication, setOpenAddIndication] = useState(false),
+    [listOfIndications, setListOfIndications] = useState(null),
+    [selectedIndication, setSelectedIndication] = useState(null),
+    [listOfPeople, setListOfPeople] = useState(null),
+    [selectedPerson, setSelectedPerson] = useState(null),
+    [listOfRoles, setListOfRoles] = useState(null),
+    [selectedRole, setSelectedRole] = useState(null);
 
   // define functions
   const EditToolbar = (props) => {
@@ -76,7 +88,7 @@ function AssignResources(props) {
           const id = randomId();
           setRows((oldRows) => [
             ...oldRows,
-            { id, name: "", role: "", isNew: true },
+            { id, name: "", role: "", isNew: true, usename: username },
           ]);
           setRowModesModel((oldModel) => ({
             ...oldModel,
@@ -113,10 +125,19 @@ function AssignResources(props) {
               Add
             </Button>
           </Tooltip>
+          <Tooltip title="Assign someone to a role in each study for all studies in an indication">
+            <Button
+              color="warning"
+              startIcon={<AddCircleOutline />}
+              onClick={() => setOpenAddIndication(true)}
+            >
+              Add Ind.
+            </Button>
+          </Tooltip>
           <Tooltip title="Create rows for all roles in a study">
             <Button
               color="error"
-              startIcon={<Add color="error" />}
+              startIcon={<AddCircle color="error" />}
               onClick={handleClickMenu}
               aria-label="menu2"
               aria-controls={Boolean(anchorEl) ? "View a role" : undefined}
@@ -194,26 +215,6 @@ function AssignResources(props) {
     handleRowModesModelChange = (newRowModesModel) => {
       setRowModesModel(newRowModesModel);
     },
-    // ResourceComponent = (props) => {
-    //   return <p>Name: {props.value}</p>;
-    // },
-    // EditResourceComponent = (props) => {
-    //   console.log(props);
-    //   return (
-    //     <Select
-    //       value={props.value}
-    //       label="Name"
-    //       onChange={setNameFromSelect}
-    //     >
-    //       <MenuItem value={10}>Ten</MenuItem>
-    //       <MenuItem value={20}>Twenty</MenuItem>
-    //       <MenuItem value={30}>Thirty</MenuItem>
-    //     </Select>
-    //   );
-    // },
-    // setNameFromSelect = (props)=>{
-    //   console.log(props)
-    // },
     columns = [
       {
         field: "study",
@@ -329,6 +330,45 @@ function AssignResources(props) {
           from: "",
           to: "",
           isNew: true,
+          usename: username,
+        });
+      });
+      setRows([...rows, ...tempRows]);
+    },
+    selectIndication = (e) => {
+      setSelectedIndication(e);
+    },
+    selectPerson = (e) => {
+      setSelectedPerson(e);
+    },
+    selectRole = (e) => {
+      setSelectedRole(e);
+    },
+    addRowsForIndication = () => {
+      // console.log("studiesInfo", studiesInfo);
+      // console.log("selectedIndication", selectedIndication);
+      // console.log("selectedPerson", selectedPerson);
+      // console.log("selectedRole", selectedRole);
+      const indicationStudies = Object.keys(studiesInfo).map((s) => {
+        return { study: s, indication: studiesInfo[s].split("/")[1] };
+      });
+      // console.log("indicationStudies", indicationStudies);
+      const studies = indicationStudies
+        .filter((s) => s.indication === selectedIndication.value)
+        .map((s) => s.study);
+      // console.log("studies", studies);
+      const tempRows = [];
+      studies.forEach((study) => {
+        const id = randomId();
+        tempRows.push({
+          id,
+          study: study,
+          role: selectedRole.value,
+          name: selectedPerson.value,
+          from: "",
+          to: "",
+          isNew: true,
+          usename: username,
         });
       });
       setRows([...rows, ...tempRows]);
@@ -345,6 +385,7 @@ function AssignResources(props) {
       setAllUsers(localAllUsersJson.sort()); // sample list of all users
       setFutureUsers(localFutureUsersJson.sort()); // sample list of future users
       setDeletedUsers(localDeletedUsersJson.sort()); // sample list of deleted users
+      setIndications(localAllIndicationsJson); // sample list of all indications
     } else {
       console.log("loading remote files from " + userJsonDir);
       getJsonFile(userJsonDir + "/assignments.json", setRows); // data for users assigned to studies
@@ -354,9 +395,23 @@ function AssignResources(props) {
       getJsonFile(userJsonDir + "/all_users.json", setAllUsers); // List of all users
       getJsonFile(userJsonDir + "/future_users.json", setFutureUsers); // List of future users
       getJsonFile(userJsonDir + "/deleted_users.json", setDeletedUsers); // List of deleted users
+      getJsonFile(userJsonDir + "/all_indications.json", setIndications); // List of all indications
     }
     // eslint-disable-next-line
   }, [mode, userJsonDir]);
+
+  useEffect(() => {
+    if (indications === null) return;
+    setListOfIndications(indications.map((i) => ({ value: i, label: i })));
+  }, [indications]);
+  useEffect(() => {
+    if (allUsers === null) return;
+    setListOfPeople(allUsers.map((i) => ({ value: i, label: i })));
+  }, [allUsers]);
+  useEffect(() => {
+    if (roles === null) return;
+    setListOfRoles(roles.map((i) => ({ value: i, label: i })));
+  }, [roles]);
 
   // make list of users with all users, adding future users and then removing deleted users
   useEffect(() => {
@@ -438,6 +493,57 @@ function AssignResources(props) {
 
       {/* Gantt chart */}
       {/* <Gantt info={rows} /> */}
+
+      {/* Dialog with General info about this screen */}
+      <Dialog
+        fullWidth
+        onClose={() => setOpenAddIndication(false)}
+        open={openAddIndication}
+        PaperProps={{
+          sx: {
+            minHeight: "50%",
+            maxHeight: "50%",
+          },
+        }}
+      >
+        <DialogTitle>Add someone for an indication</DialogTitle>
+        <DialogContent>
+          <p>
+            Add a person to all studies in an indication, assigning them to a
+            selected role.
+          </p>
+          <ul>
+            <b>Indication</b>
+            <Select
+              placeholder={"Choose an indication"}
+              options={listOfIndications}
+              value={selectedIndication}
+              onChange={selectIndication}
+            />
+            <b>Person</b>
+            <Select
+              placeholder={"Choose a person"}
+              options={listOfPeople}
+              value={selectedPerson}
+              onChange={selectPerson}
+            />
+            <b>Role</b>
+            <Select
+              placeholder={"Choose a default role"}
+              options={listOfRoles}
+              value={selectedRole}
+              onChange={selectRole}
+            />
+          </ul>
+          {selectedIndication && selectedPerson && selectedRole ? (
+            <Button onClick={() => addRowsForIndication()}>
+              Add rows for each study in this indication
+            </Button>
+          ) : null}
+          <br />
+          <Button onClick={() => setOpenAddIndication(false)}>Close</Button>
+        </DialogContent>
+      </Dialog>
 
       {/* Dialog with General info about this screen */}
       <Dialog fullWidth onClose={() => setOpenInfo(false)} open={openInfo}>

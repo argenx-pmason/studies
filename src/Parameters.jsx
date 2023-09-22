@@ -298,16 +298,16 @@ function Parameters(props) {
       setColorsForMilestones(localColorsForMilestonesJson);
       setEventsToInclude(localEventsToIncludeJson);
     } else {
-      getJsonFile(userJsonDir + "/all_events", setAllEvents); // data for all events
-      getJsonFile(userJsonDir + "/all_indications", setAllIndications);
-      getJsonFile(userJsonDir + "/all_roles", setAllRoles);
-      getJsonFile(userJsonDir + "/all_all_studies", setAllStudies);
-      getJsonFile(userJsonDir + "/all_users", setAllUsers); // data for all users
+      getJsonFile(userJsonDir + "/all_events.json", setAllEvents); // data for all events
+      getJsonFile(userJsonDir + "/all_indications.json", setAllIndications);
+      getJsonFile(userJsonDir + "/all_roles.json", setAllRoles);
+      getJsonFile(userJsonDir + "/all_all_studies.json", setAllStudies);
+      getJsonFile(userJsonDir + "/all_users.json", setAllUsers); // data for all users
       getJsonFile(
-        userJsonDir + "/colors_for_milestones",
+        userJsonDir + "/colors_for_milestones.json",
         setColorsForMilestones
       );
-      getJsonFile(userJsonDir + "/events_to_include", setEventsToInclude);
+      getJsonFile(userJsonDir + "/events_to_include.json", setEventsToInclude);
     }
   }, [mode, userJsonDir, currentFile]);
 
@@ -318,14 +318,14 @@ function Parameters(props) {
     // get the actual filename to read if we use the load data or save data buttons
     const f = fileOptions.filter((fo) => fo.value === currentFile.value),
       tempFilename = f[0].filename;
-    // console.log(
-    //   "tempFilename",
-    //   tempFilename,
-    //   "currentFile",
-    //   currentFile,
-    //   "fileOptions",
-    //   fileOptions
-    // );
+    console.log(
+      "tempFilename",
+      tempFilename,
+      "currentFile",
+      currentFile,
+      "fileOptions",
+      fileOptions
+    );
     setFilename(tempFilename);
     // eslint-disable-next-line
   }, [currentFile]);
@@ -381,8 +381,14 @@ function Parameters(props) {
         <DialogTitle>Info about this screen</DialogTitle>
         <DialogContent>
           <ul>
-            <li>This screen is still under development and the editing does not fully work yet.</li>
-            <li>The main purpose of this screen at present is to view the JSON files used to drive the system.</li>
+            <li>
+              This screen is still under development and the editing does not
+              fully work yet.
+            </li>
+            <li>
+              The main purpose of this screen at present is to view the JSON
+              files used to drive the system.
+            </li>
           </ul>
         </DialogContent>
       </Dialog>
