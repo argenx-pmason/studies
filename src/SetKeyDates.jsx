@@ -432,6 +432,7 @@ function SetKeyDates(props) {
   return (
     <Box
       sx={{
+        mt: 6,
         height: 500,
         width: "100%",
         "& .actions": {
@@ -595,7 +596,12 @@ function SetKeyDates(props) {
       </Dialog>
 
       {/* Dialog with General info about this screen */}
-      <Dialog fullWidth onClose={() => setOpenInfo(false)} open={openInfo}>
+      <Dialog
+        fullWidth
+        maxWidth="xl"
+        onClose={() => setOpenInfo(false)}
+        open={openInfo}
+      >
         <DialogTitle>Info about this screen</DialogTitle>
         <DialogContent>
           <ul>

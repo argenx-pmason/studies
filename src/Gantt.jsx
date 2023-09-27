@@ -402,14 +402,14 @@ function Gantt(props) {
     // define gantt chart settings
     const tempChart = {
       chart: {
-        height: scrollable ? undefined : screenHeight - topMargin,
+        height: scrollable ? screenHeight * 5 : screenHeight - topMargin,
         // width: screenWidth * 0.8,
         zooming: { type: "xy" },
-        scrollablePlotArea: scrollable
-          ? {
-              minHeight: screenHeight - topMargin,
-            }
-          : undefined,
+        // scrollablePlotArea: scrollable
+        //   ? {
+        //       minHeight: screenHeight - topMargin,
+        //     }
+        //   : undefined,
       },
       title: {
         text:
@@ -581,10 +581,11 @@ function Gantt(props) {
     eventsToInclude,
     colorsForMilestones,
     globalCollapse,
+    scrollable,
   ]);
 
   return (
-    <Box>
+    <Box sx={{ mt: 6 }}>
       {["person", "study"].includes(type) && type !== undefined ? (
         <Box sx={{ position: "fixed", top: 40, left: 20, zIndex: 100 }}>
           <Tooltip title="Information about this screen">
@@ -598,7 +599,7 @@ function Gantt(props) {
               Info
             </Button>
           </Tooltip>
-          <Tooltip title="Toggle chart scrolling">
+          <Tooltip title="Toggle (fit screen / long view)">
             <Checkbox
               color={"success"}
               checked={scrollable}
@@ -627,7 +628,12 @@ function Gantt(props) {
       ) : null}
 
       {/* Dialog with General info about this screen */}
-      <Dialog fullWidth onClose={() => setOpenInfo(false)} open={openInfo}>
+      <Dialog
+        fullWidth
+        maxWidth="xl"
+        onClose={() => setOpenInfo(false)}
+        open={openInfo}
+      >
         <DialogTitle>Info about this screen</DialogTitle>
         <DialogContent>
           <p>Color key for milestones</p>

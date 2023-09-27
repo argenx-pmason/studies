@@ -20,6 +20,7 @@ import {
   Info,
   AddCircle,
   AddCircleOutline,
+  Download,
 } from "@mui/icons-material";
 import {
   GridRowModes,
@@ -29,6 +30,9 @@ import {
   GridRowEditStopReasons,
   GridToolbarExport,
 } from "@mui/x-data-grid-pro";
+import { LocalizationProvider } from "@mui/x-date-pickers-pro";
+import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // import EditResourceComponent from "./EditResourceComponent";
 import { randomId } from "@mui/x-data-grid-generator";
 import { getJsonFile, updateJsonFile } from "./utility";
@@ -40,6 +44,7 @@ import localFutureUsersJson from "./samples/future_users.json"; // made manually
 import localDeletedUsersJson from "./samples/deleted_users.json"; // made manually
 import localStudiesInfoJson from "./samples/studies_info.json"; // made with SAS program
 import localAllIndicationsJson from "./samples/all_indications.json"; // generated from SAS dataset &_SASWS_\general\biostat\metadata\projects\rm\all_indications
+import localAllCompoundsJson from "./samples/all_compounds.json"; // generated from SAS dataset &_SASWS_\general\biostat\metadata\projects\rm\all_compounds
 import { LicenseInfo } from "@mui/x-data-grid-pro";
 // import Gantt from "./Gantt";
 // apply the license for data grid
@@ -73,13 +78,18 @@ function AssignResources(props) {
     [openInfo, setOpenInfo] = useState(false),
     [anchorEl, setAnchorEl] = useState(null),
     [indications, setIndications] = useState(null),
+    [compounds, setCompounds] = useState(null),
     [openAddIndication, setOpenAddIndication] = useState(false),
     [listOfIndications, setListOfIndications] = useState(null),
+    [listOfCompounds, setListOfCompounds] = useState(null),
+    [selectedCompound, setSelectedCompound] = useState(null),
     [selectedIndication, setSelectedIndication] = useState(null),
     [listOfPeople, setListOfPeople] = useState(null),
     [selectedPerson, setSelectedPerson] = useState(null),
     [listOfRoles, setListOfRoles] = useState(null),
-    [selectedRole, setSelectedRole] = useState(null);
+    [selectedRole, setSelectedRole] = useState(null),
+    [selectedFrom, setSelectedFrom] = useState(null),
+    [selectedTo, setSelectedTo] = useState(null);
 
   // define functions
   const EditToolbar = (props) => {
@@ -125,7 +135,7 @@ function AssignResources(props) {
               Add
             </Button>
           </Tooltip>
-          <Tooltip title="Assign someone to a role in each study for all studies in an indication">
+          <Tooltip title="Assign someone to a role in each study for all studies in an indication/compound">
             <Button
               color="warning"
               startIcon={<AddCircleOutline />}
@@ -335,6 +345,9 @@ function AssignResources(props) {
       });
       setRows([...rows, ...tempRows]);
     },
+    selectCompound = (e) => {
+      setSelectedCompound(e);
+    },
     selectIndication = (e) => {
       setSelectedIndication(e);
     },
@@ -345,15 +358,21 @@ function AssignResources(props) {
       setSelectedRole(e);
     },
     addRowsForIndication = () => {
-      // console.log("studiesInfo", studiesInfo);
+      console.log("studiesInfo", studiesInfo);
       // console.log("selectedIndication", selectedIndication);
       // console.log("selectedPerson", selectedPerson);
       // console.log("selectedRole", selectedRole);
+      // console.log("selectedFrom", selectedFrom, selectedFrom.toISOString());
       const indicationStudies = Object.keys(studiesInfo).map((s) => {
-        return { study: s, indication: studiesInfo[s].split("/")[1] };
+        return {
+          study: s,
+          compound: studiesInfo[s].split("/")[0],
+          indication: studiesInfo[s].split("/")[1],
+        };
       });
       // console.log("indicationStudies", indicationStudies);
       const studies = indicationStudies
+        .filter((s) => s.compound === selectedCompound.value)
         .filter((s) => s.indication === selectedIndication.value)
         .map((s) => s.study);
       // console.log("studies", studies);
@@ -365,12 +384,13 @@ function AssignResources(props) {
           study: study,
           role: selectedRole.value,
           name: selectedPerson.value,
-          from: "",
-          to: "",
+          from: selectedFrom ? selectedFrom.toISOString() : "",
+          to: selectedTo ? selectedTo.toISOString() : "",
           isNew: true,
           usename: username,
         });
       });
+      console.log("adding these rows", tempRows);
       setRows([...rows, ...tempRows]);
     };
 
@@ -386,6 +406,7 @@ function AssignResources(props) {
       setFutureUsers(localFutureUsersJson.sort()); // sample list of future users
       setDeletedUsers(localDeletedUsersJson.sort()); // sample list of deleted users
       setIndications(localAllIndicationsJson); // sample list of all indications
+      setCompounds(localAllCompoundsJson); // sample list of all compounds (products
     } else {
       console.log("loading remote files from " + userJsonDir);
       getJsonFile(userJsonDir + "/assignments.json", setRows); // data for users assigned to studies
@@ -396,10 +417,15 @@ function AssignResources(props) {
       getJsonFile(userJsonDir + "/future_users.json", setFutureUsers); // List of future users
       getJsonFile(userJsonDir + "/deleted_users.json", setDeletedUsers); // List of deleted users
       getJsonFile(userJsonDir + "/all_indications.json", setIndications); // List of all indications
+      getJsonFile(userJsonDir + "/all_compounds.json", setCompounds); // List of all compounds (products
     }
     // eslint-disable-next-line
   }, [mode, userJsonDir]);
 
+  useEffect(() => {
+    if (compounds === null) return;
+    setListOfCompounds(compounds.map((i) => ({ value: i, label: i })));
+  }, [compounds]);
   useEffect(() => {
     if (indications === null) return;
     setListOfIndications(indications.map((i) => ({ value: i, label: i })));
@@ -424,294 +450,352 @@ function AssignResources(props) {
   }, [allUsers, futureUsers, deletedUsers]);
 
   return (
-    <Box
-      sx={{
-        height: 500,
-        width: "100%",
-        "& .actions": {
-          color: "text.secondary",
-        },
-        "& .textPrimary": {
-          color: "text.primary",
-        },
-      }}
-    >
-      {rows && (
-        <DataGridPro
-          rows={rows}
-          columns={columns}
-          density="compact"
-          autoHeight={true}
-          rowHeight={30}
-          editMode="row"
-          rowModesModel={rowModesModel}
-          onRowModesModelChange={handleRowModesModelChange}
-          onRowEditStop={handleRowEditStop}
-          processRowUpdate={processRowUpdate}
-          slots={{
-            toolbar: EditToolbar,
-          }}
-          slotProps={{
-            toolbar: { setRows, setRowModesModel },
-          }}
-          sx={{
-            // height: windowDimension.winHeight - topMargin,
-            fontFamily: "system-ui;",
-            fontWeight: "fontSize=5",
-            fontSize: "0.7em",
-            padding: 0.1,
-          }}
-          getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-          }
-        />
-      )}
-
-      {studies && (
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu2"
-          open={Boolean(anchorEl)}
-          onClose={handleCloseMenu}
-          onClick={handleCloseMenu}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        >
-          {studies.map((s, id) => (
-            <MenuItem key={"menuItem2-" + id} onClick={handleCloseMenu}>
-              <Box
-                onClick={() => {
-                  handleAddAllRows(s);
-                }}
-              >
-                {s}
-              </Box>
-            </MenuItem>
-          ))}
-        </Menu>
-      )}
-
-      {/* Gantt chart */}
-      {/* <Gantt info={rows} /> */}
-
-      {/* Dialog with General info about this screen */}
-      <Dialog
-        fullWidth
-        onClose={() => setOpenAddIndication(false)}
-        open={openAddIndication}
-        PaperProps={{
-          sx: {
-            minHeight: "50%",
-            maxHeight: "50%",
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Box
+        sx={{
+          mt: 6,
+          height: 500,
+          width: "100%",
+          "& .actions": {
+            color: "text.secondary",
+          },
+          "& .textPrimary": {
+            color: "text.primary",
           },
         }}
       >
-        <DialogTitle>Add someone for an indication</DialogTitle>
-        <DialogContent>
-          <p>
-            Add a person to all studies in an indication, assigning them to a
-            selected role.
-          </p>
-          <ul>
-            <b>Indication</b>
-            <Select
-              placeholder={"Choose an indication"}
-              options={listOfIndications}
-              value={selectedIndication}
-              onChange={selectIndication}
-            />
-            <b>Person</b>
-            <Select
-              placeholder={"Choose a person"}
-              options={listOfPeople}
-              value={selectedPerson}
-              onChange={selectPerson}
-            />
-            <b>Role</b>
-            <Select
-              placeholder={"Choose a default role"}
-              options={listOfRoles}
-              value={selectedRole}
-              onChange={selectRole}
-            />
-          </ul>
-          {selectedIndication && selectedPerson && selectedRole ? (
-            <Button onClick={() => addRowsForIndication()}>
-              Add rows for each study in this indication
-            </Button>
-          ) : null}
-          <br />
-          <Button onClick={() => setOpenAddIndication(false)}>Close</Button>
-        </DialogContent>
-      </Dialog>
+        {rows && (
+          <DataGridPro
+            rows={rows}
+            columns={columns}
+            density="compact"
+            autoHeight={true}
+            rowHeight={30}
+            editMode="row"
+            rowModesModel={rowModesModel}
+            onRowModesModelChange={handleRowModesModelChange}
+            onRowEditStop={handleRowEditStop}
+            processRowUpdate={processRowUpdate}
+            slots={{
+              toolbar: EditToolbar,
+            }}
+            slotProps={{
+              toolbar: { setRows, setRowModesModel },
+            }}
+            sx={{
+              // height: windowDimension.winHeight - topMargin,
+              fontFamily: "system-ui;",
+              fontWeight: "fontSize=5",
+              fontSize: "0.7em",
+              padding: 0.1,
+            }}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }
+          />
+        )}
 
-      {/* Dialog with General info about this screen */}
-      <Dialog fullWidth onClose={() => setOpenInfo(false)} open={openInfo}>
-        <DialogTitle>Info about this screen</DialogTitle>
-        <DialogContent>
-          <ul>
-            <li>
-              <b>ADD</b> will add a row to the table, ready to be edited. Edited
-              rows are not saved to server until SAVE DATA is pressed.
-            </li>
-            <li>
-              <b>LOAD DATA</b> will load the latest data from the JSON file on
-              server.
-            </li>
-            <li>
-              <b>SAVE DATA</b> will delete the current JSON file on server and
-              then save the current data in the table as a new JSON file.
-            </li>
-            <li>
-              <b>EXPORT</b> allows exporting to a CSV (or printing) any selected
-              rows from the table. You can select any number of rows. Selecting
-              a row and pressing control-A will select all the rows in table.
-            </li>
-            <li>
-              <b>INFO</b> is this screen.
-            </li>
-          </ul>
-          <p>Editing rows</p>
-          <ul>
-            <li>
-              <Edit color="warning" size="small" />
-              puts the row into edit mode
-            </li>
-            <li>
-              <Delete color="error" size="small" />
-              deletes the row
-            </li>
-            <li>
-              <Save color="success" size="small" />
-              saves the row to memory, but it wont be saved to server (yet)
-            </li>
-            <li>
-              <Cancel color="error" size="small" />
-              discards changes made to row
-            </li>
-          </ul>
-          <p>Data sources</p>
-          <ul>
-            <li>
-              <b>
+        {studies && (
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu2"
+            open={Boolean(anchorEl)}
+            onClose={handleCloseMenu}
+            onClick={handleCloseMenu}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            {studies.map((s, id) => (
+              <MenuItem key={"menuItem2-" + id} onClick={handleCloseMenu}>
+                <Box
+                  onClick={() => {
+                    handleAddAllRows(s);
+                  }}
+                >
+                  {s}
+                </Box>
+              </MenuItem>
+            ))}
+          </Menu>
+        )}
+
+        {/* Gantt chart */}
+        {/* <Gantt info={rows} /> */}
+
+        {/* Dialog with General info about this screen */}
+        <Dialog
+          fullWidth
+          onClose={() => setOpenAddIndication(false)}
+          open={openAddIndication}
+          PaperProps={{
+            sx: {
+              minHeight: "50%",
+              maxHeight: "50%",
+            },
+          }}
+        >
+          <DialogTitle>Add someone for an indication</DialogTitle>
+          <DialogContent>
+            <p>
+              Add a person to all studies in an indication, assigning them to a
+              selected role.
+            </p>
+            <ul>
+              <b>Compound</b>
+              <Select
+                placeholder={"Choose a compound"}
+                options={listOfCompounds}
+                value={selectedCompound}
+                onChange={selectCompound}
+              />
+              <b>Indication</b>
+              <Select
+                placeholder={"Choose an indication"}
+                options={listOfIndications}
+                value={selectedIndication}
+                onChange={selectIndication}
+              />
+              <b>Person</b>
+              <Select
+                placeholder={"Choose a person"}
+                options={listOfPeople}
+                value={selectedPerson}
+                onChange={selectPerson}
+              />
+              <b>Role</b>
+              <Select
+                placeholder={"Choose a default role"}
+                options={listOfRoles}
+                value={selectedRole}
+                onChange={selectRole}
+              />
+              <DatePicker
+                label="From"
+                value={selectedFrom}
+                onChange={(newValue) => setSelectedFrom(newValue)}
+                sx={{ mt: 2 }}
+              />
+              <DatePicker
+                label="To"
+                value={selectedTo}
+                onChange={(newValue) => setSelectedTo(newValue)}
+                sx={{ mt: 2 }}
+              />
+            </ul>
+            {selectedCompound &&
+            selectedIndication &&
+            selectedPerson &&
+            selectedRole ? (
+              <Button onClick={() => addRowsForIndication()}>
+                Add rows for each study in this indication
+              </Button>
+            ) : null}
+            <br />
+            <Button onClick={() => setOpenAddIndication(false)}>Close</Button>
+          </DialogContent>
+        </Dialog>
+
+        {/* Dialog with General info about this screen */}
+        <Dialog
+          fullWidth
+          maxWidth="xl"
+          onClose={() => setOpenInfo(false)}
+          open={openInfo}
+        >
+          <DialogTitle>Info about this screen</DialogTitle>
+          <DialogContent>
+            {" "}
+            <Add color="info" /> <b>ADD</b> will add a row to the table, ready
+            to be edited. Edited rows are not saved to server until SAVE DATA is
+            pressed.
+            <br />
+            <AddCircleOutline color="warning" /> <b>ADD IND</b> will add a row
+            to the table for each study matching the choices made (compound,
+            indication, person and role), ready to be edited. Edited rows are
+            not saved to server until SAVE DATA is pressed.
+            <br />
+            <AddCircle color="error" /> <b>ALL</b> will add a row to the table
+            for each role for the study selected, ready to be edited. Edited
+            rows are not saved to server until SAVE DATA is pressed.
+            <br />
+            <CloudDownload color="info" /> <b>LOAD DATA</b> will load the latest
+            data from the JSON file on server.
+            <br />
+            <Save color="info" /> <b>SAVE DATA</b> will delete the current JSON
+            file on server and then save the current data in the table as a new
+            JSON file.
+            <br />
+            <Download color="info" /> <b>EXPORT</b> allows exporting to a CSV
+            (or printing) any selected rows from the table. You can select any
+            number of rows. Selecting a row and pressing control-A will select
+            all the rows in table.
+            <br />
+            <Info color="info" />
+            <b>INFO</b> is this screen.
+            <p>Editing rows</p>
+            <Edit color="warning" size="small" /> puts the row into edit mode
+            <br />
+            <Delete color="error" size="small" /> deletes the row
+            <br />
+            <Save color="success" size="small" /> saves the row to memory, but
+            it wont be saved to server (yet)
+            <br />
+            <Cancel color="error" size="small" /> discards changes made to row
+            <p>Data sources</p>
+            <ul>
+              <li>
+                View the{" "}
                 <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_studies.json"
+                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=/general/biostat/metadata/projects/rm"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  all_studies.json
-                </a>
-              </b>{" "}
-              has a list of all studies taken from the <b>studies_status</b> SAS
-              dataset located in <b>/general/biostat/metadata/projects</b>,
-              which is created by{" "}
-              <a
-                href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_studies.sas"
-                target="_blank"
-                rel="noreferrer"
-              >
-                all_studies.sas
-              </a>
-            </li>
-            <li>
-              <b>
+                  directory
+                </a>{" "}
+                where the JSON files are located.
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_studies.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    all_studies.json
+                  </a>
+                </b>{" "}
+                has a list of all studies taken from the <b>studies_status</b>{" "}
+                SAS dataset located in <b>/general/biostat/metadata/projects</b>
+                , which is created by{" "}
                 <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/studies_info.json"
+                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_studies.sas"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  studies_info.json
+                  all_studies.sas
                 </a>
-              </b>{" "}
-              has a list of info about each study taken from the{" "}
-              <b>studies_info</b> SAS dataset located in{" "}
-              <b>/general/biostat/metadata/projects</b> and by running the
-              lsaf_getchildren macro to get product/compounds, which is created
-              by{" "}
-              <a
-                href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_studies.sas"
-                target="_blank"
-                rel="noreferrer"
-              >
-                studies_info.sas
-              </a>
-            </li>
-            <li>
-              <b>
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/studies_info.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    studies_info.json
+                  </a>
+                </b>{" "}
+                has a list of info about each study taken from the{" "}
+                <b>studies_info</b> SAS dataset located in{" "}
+                <b>/general/biostat/metadata/projects</b> and by running the
+                lsaf_getchildren macro to get product/compounds, which is
+                created by{" "}
                 <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/future_users.json"
+                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_studies.sas"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  future_users.json
+                  studies_info.sas
                 </a>
-              </b>{" "}
-              has a list of future users not yet in the LSAF system, which is
-              edited manually
-            </li>
-            <li>
-              <b>
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/future_users.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    future_users.json
+                  </a>
+                </b>{" "}
+                has a list of future users not yet in the LSAF system, which is
+                edited manually
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/deleted_users.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    deleted_users.json
+                  </a>
+                </b>{" "}
+                has a list of users that were part of LSAF but who we want
+                removed, which is edited manually
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_users.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    all_users.json
+                  </a>
+                </b>{" "}
+                has a list of all users taken from{" "}
+                <b>/general/maintenance/metadata/folder_access_request.xlsx</b>,
+                which is created by{" "}
                 <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/deleted_users.json"
+                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_users.sas"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  deleted_users.json
+                  all_users.sas
                 </a>
-              </b>{" "}
-              has a list of users that were part of LSAF but who we want
-              removed, which is edited manually
-            </li>
-            <li>
-              <b>
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_roles.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    all_roles.json
+                  </a>
+                </b>{" "}
+                has a list of all roles, which is manually created
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/assignments.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    assignments.json
+                  </a>
+                </b>{" "}
+                has a list of all resources assigned to roles in studies, which
+                is manually created with this app
+              </li>
+              <li>
+                <b>
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/whats_new.json"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    whats_new.json
+                  </a>
+                </b>{" "}
+                has a list of all studies found in the current spreadsheet whose
+                description, status or year have changed since the last
+                spreadsheet, built by{" "}
                 <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_users.json"
+                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/whats_new.sas"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  all_users.json
+                  whats_new.sas
                 </a>
-              </b>{" "}
-              has a list of all users taken from{" "}
-              <b>/general/maintenance/metadata/folder_access_request.xlsx</b>,
-              which is created by{" "}
-              <a
-                href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_users.sas"
-                target="_blank"
-                rel="noreferrer"
-              >
-                all_users.sas
-              </a>
-            </li>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/all_roles.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  all_roles.json
-                </a>
-              </b>{" "}
-              has a list of all roles, which is manually created
-            </li>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/assignments.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  assignments.json
-                </a>
-              </b>{" "}
-              has a list of all resources assigned to roles in studies, which is
-              manually created with this app
-            </li>
-          </ul>{" "}
-        </DialogContent>
-      </Dialog>
-    </Box>
+              </li>
+            </ul>{" "}
+          </DialogContent>
+        </Dialog>
+      </Box>
+    </LocalizationProvider>
   );
 }
 export default AssignResources;

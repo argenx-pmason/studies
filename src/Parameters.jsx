@@ -333,7 +333,7 @@ function Parameters(props) {
   //   console.log("rows", rows, "columns", columns);
 
   return (
-    <Box>
+    <Box sx={{ mt: 6 }}>
       {fileOptions && (
         <Select
           options={fileOptions}

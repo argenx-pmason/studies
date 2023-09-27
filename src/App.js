@@ -12,6 +12,7 @@ import {
   Button,
   Snackbar,
   Alert,
+  AppBar,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AssignResources from "./AssignResources";
@@ -52,21 +53,24 @@ function App() {
 
   return (
     <div className="App">
-      <Tabs
-        value={tabValue}
-        onChange={(event, newValue) => {
-          changeTabValue(newValue);
-        }}
-        variant="scrollable"
-        scrollButtons="auto"
-      >
-        <Tab label="Set Key Dates" id={"tab0"} sx={{ fontSize: 12 }} />
-        <Tab label="Assign Resources" id={"tab1"} sx={{ fontSize: 12 }} />
-        <Tab label="Study Gantt" id={"tab2"} sx={{ fontSize: 12 }} />
-        <Tab label="Person Gantt" id={"tab3"} sx={{ fontSize: 12 }} />
-        <Tab label="Parameters" id={"tab4"} sx={{ fontSize: 12 }} />
-        <Tab label="Holidays" id={"tab5"} sx={{ fontSize: 12 }} />
-      </Tabs>
+      <AppBar position="fixed" color="transparent">
+        <Tabs
+          value={tabValue}
+          onChange={(event, newValue) => {
+            changeTabValue(newValue);
+          }}
+          variant="scrollable"
+          scrollButtons="auto"
+        >
+          <Tab label="Set Key Dates" id={"tab0"} sx={{ fontSize: 12 }} />
+          <Tab label="Assign Resources" id={"tab1"} sx={{ fontSize: 12 }} />
+          <Tab label="Study Gantt" id={"tab2"} sx={{ fontSize: 12 }} />
+          <Tab label="Person Gantt" id={"tab3"} sx={{ fontSize: 12 }} />
+          <Tab label="Parameters" id={"tab4"} sx={{ fontSize: 12 }} />
+          <Tab label="Holidays" id={"tab5"} sx={{ fontSize: 12 }} />
+        </Tabs>
+      </AppBar>
+
       {tabValue === 0 && <SetKeyDates user={tempUsername} />}
       {tabValue === 1 && <AssignResources user={tempUsername} />}
       {tabValue === 2 && <Gantt type="study" user={tempUsername} />}
@@ -102,6 +106,29 @@ function App() {
               }}
               variant="standard"
             />
+            {/*  <TextField
+                label={
+                  access &&
+                  access.length > 0 &&
+                  access.filter((u) => u.userid === user).length > 0
+                    ? "User ID (valid)"
+                    : "Enter User ID"
+                }
+                value={user}
+                onChange={(e) => {
+                  setUser(e.target.value);
+                }}
+                color={
+                  access && access.filter((u) => u.userid === user).length > 0
+                    ? "success"
+                    : access === null
+                    ? "warning"
+                    : "error"
+                }
+                sx={{
+                  width: "100%",
+                }}
+              /> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={() => saveUser()}>Save</Button>
