@@ -5,10 +5,11 @@ import {
   DialogTitle,
   DialogContent,
   Tooltip,
-  Button,
-  Checkbox,
+  IconButton,
+  Grid,
 } from "@mui/material";
-import { Info } from "@mui/icons-material";
+import Select from "react-select";
+import { Info, ZoomIn, ZoomOut, RestartAlt } from "@mui/icons-material";
 import Highcharts from "highcharts";
 import highchartsGantt from "highcharts/modules/gantt";
 import highchartsMore from "highcharts/highcharts-more";
@@ -33,14 +34,15 @@ function Gantt(props) {
     webDavPrefix = "https://xarprod.ondemand.sas.com/lsaf/webdav/repo",
     userJsonDir = webDavPrefix + "/general/biostat/metadata/projects/rm",
     [info, setInfo] = useState(null),
+    [scale, setScale] = useState(1),
     [openInfo, setOpenInfo] = useState(false),
     [studiesInfo, setStudiesInfo] = useState(null),
     [userHolidays, setUserHolidays] = useState(null),
     [rolesLongShort, setRolesLongShort] = useState(null),
     [eventsToInclude, setEventsToInclude] = useState(null),
     [colorsForMilestones, setColorsForMilestones] = useState(null),
-    [scrollable, setScrollable] = useState(false),
-    [globalCollapse, setGlobalCollapse] = useState(false),
+    // [scrollable, setScrollable] = useState(false),
+    [globalCollapse] = useState(false),
     filename = "key_dates.json",
     [keyDates, setKeyDates] = useState(null),
     dateFormat = Highcharts.dateFormat,
@@ -50,6 +52,39 @@ function Gantt(props) {
     // screenWidth = window.innerWidth,
     screenHeight = window.screen.availHeight,
     [chart, setChart] = useState(null),
+    selectStyles = {
+      control: (baseStyles, state) => ({
+        ...baseStyles,
+        fontSize: "12px",
+        marginLeft: 1,
+        marginTop: 14,
+        background: "#eeeeee",
+        border: state.isFocused ? "1px solid #0000ff" : "2px solid #aaaaaa",
+        // borderColor: state.isFocused ? "green" : "red",
+        // "&:hover": {
+        //   border: "1px solid #ff8b67",
+        //   boxShadow: "0px 0px 6px #ff8b67",
+        // },
+      }),
+    },
+    [listOfStudies, setListOfStudies] = useState(null),
+    [listOfPeople, setListOfPeople] = useState(null),
+    [selectedPerson, setSelectedPerson] = useState(null),
+    [selectedStudy, setSelectedStudy] = useState(null),
+    [selectedPersonOption, setSelectedPersonOption] = useState(null),
+    [selectedStudyOption, setSelectedStudyOption] = useState(null),
+    selectPerson = (e) => {
+      setSelectedPersonOption(e);
+      setSelectedPerson(e.value);
+      setSelectedStudyOption(null);
+      setSelectedStudy(null);
+    },
+    selectStudy = (e) => {
+      setSelectedStudyOption(e);
+      setSelectedStudy(e.value);
+      setSelectedPersonOption(null);
+      setSelectedPerson(null);
+    },
     ganttItem = (
       id,
       study,
@@ -105,6 +140,28 @@ function Gantt(props) {
       ); // colors to use for milestones, whose sequence matches the eventsToInclude
     }
   }, [mode, userJsonDir]);
+
+  useEffect(() => {
+    if (studiesInfo === null) return;
+    console.log("studiesInfo", studiesInfo, "info", info);
+    const tempListOfStudies = Object.keys(studiesInfo).map((s) => {
+        return { value: s, label: s };
+      }),
+      setOfPeople = new Set(info.map((i) => i.name)),
+      tempListOfPeople = [...setOfPeople].map((s) => {
+        return { value: s, label: s };
+      });
+    console.log(
+      "tempListOfStudies",
+      tempListOfStudies,
+      "setOfPeople",
+      setOfPeople,
+      "tempListOfPeople",
+      tempListOfPeople
+    );
+    setListOfStudies(tempListOfStudies);
+    setListOfPeople(tempListOfPeople);
+  }, [studiesInfo, info]);
 
   // when all data is loaded setup everything needed for the Gantt chart(s)
   useEffect(() => {
@@ -338,10 +395,21 @@ function Gantt(props) {
       const holidays = userHolidays.holiday_periods,
         allPeople = holidays.map((h) => h.name),
         uniquePeople = [...new Set(allPeople)];
+      console.log(
+        "holidays",
+        holidays,
+        "allPeople",
+        allPeople,
+        "uniquePeople",
+        uniquePeople,
+        "seriesData",
+        seriesData
+      );
       // make sure there is a line for each person
       uniquePeople.forEach((p, pid) => {
         const dataExists = seriesData.filter(
-          (sd) => sd.name.toUpperCase() === p.toUpperCase()
+          (sd) =>
+            sd.name !== undefined && sd.name.toUpperCase() === p.toUpperCase()
         );
         if (dataExists.length === 0) {
           seriesData.push({
@@ -397,12 +465,74 @@ function Gantt(props) {
       else if (key1 < key2) return -1;
       else return 0;
     });
-    // console.log("sorted seriesData", seriesData);
+    const tempSeriesData = selectedStudy
+      ? seriesData.filter(
+          (sd) =>
+            (sd.name &&
+              sd.name !== undefined &&
+              selectedStudy === sd.name.toUpperCase()) ||
+            (sd.parent &&
+              sd.parent !== undefined &&
+              selectedStudy === sd.parent.toUpperCase())
+        )
+      : selectedPerson
+      ? seriesData.filter(
+          (sd) =>
+            (sd.name &&
+              sd.name !== undefined &&
+              selectedPerson.toUpperCase() === sd.name.toUpperCase()) ||
+            (sd.parent &&
+              sd.parent !== undefined &&
+              sd.parent.toUpperCase().includes(selectedPerson.toUpperCase()))
+        )
+      : seriesData;
+    const potentialGanttItems = [];
+    tempSeriesData.forEach((sd) => {
+      potentialGanttItems.push(sd.name);
+      potentialGanttItems.push(sd.parent);
+    });
+    const uniqueGanttItems = [...new Set(potentialGanttItems)].filter(
+      (i) => i !== undefined && i !== null
+    );
+    const ganttData = selectedStudy
+      ? seriesData.filter(
+          (sd) =>
+            sd.name &&
+            sd.name !== undefined &&
+            uniqueGanttItems.includes(sd.name) &&
+            (sd.level !== "3" ||
+              (sd.level = "3" && sd.parent === selectedStudy))
+        )
+      : selectedPerson
+      ? seriesData.filter(
+          (sd) =>
+            (sd.name &&
+              sd.name !== undefined &&
+              selectedPerson.toUpperCase() === sd.name.toUpperCase()) ||
+            (sd.parent &&
+              sd.parent !== undefined &&
+              sd.parent.toUpperCase().includes(selectedPerson.toUpperCase()))
+        )
+      : seriesData;
+    console.log(
+      "sorted seriesData",
+      seriesData,
+      "selectedStudy",
+      selectedStudy,
+      "selectedPerson",
+      selectedPerson,
+      "potentialGanttItems",
+      potentialGanttItems,
+      "uniqueGanttItems",
+      uniqueGanttItems,
+      "ganttData",
+      ganttData
+    );
 
     // define gantt chart settings
     const tempChart = {
       chart: {
-        height: scrollable ? screenHeight * 5 : screenHeight - topMargin,
+        height: screenHeight * scale - topMargin,
         // width: screenWidth * 0.8,
         zooming: { type: "xy" },
         // scrollablePlotArea: scrollable
@@ -489,7 +619,7 @@ function Gantt(props) {
       series: [
         {
           name: "Resource",
-          data: seriesData,
+          data: ganttData,
           pointPadding: 0,
           groupPadding: 0,
           maxPointWidth: 30,
@@ -581,168 +711,248 @@ function Gantt(props) {
     eventsToInclude,
     colorsForMilestones,
     globalCollapse,
-    scrollable,
+    scale,
+    selectedStudy,
+    selectedPerson,
   ]);
 
   return (
-    <Box sx={{ mt: 6 }}>
-      {["person", "study"].includes(type) && type !== undefined ? (
-        <Box sx={{ position: "fixed", top: 40, left: 20, zIndex: 100 }}>
-          <Tooltip title="Information about this screen">
-            <Button
-              color="info"
-              startIcon={<Info />}
-              onClick={() => {
-                setOpenInfo(true);
-              }}
-            >
-              Info
-            </Button>
-          </Tooltip>
-          <Tooltip title="Toggle (fit screen / long view)">
-            <Checkbox
-              color={"success"}
-              checked={scrollable}
-              onChange={() => {
-                setScrollable(!scrollable);
-              }}
+    <Grid container spacing={1}>
+      <Grid item xs={3} sx={{ mt: 1 }}>
+        {" "}
+        {["person", "study"].includes(type) && type !== undefined ? (
+          <Box sx={{ position: "fixed", top: 40, left: 20, zIndex: 100 }}>
+            {type === "study" && listOfStudies !== null ? (
+              <Select
+                options={listOfStudies}
+                value={selectedStudyOption}
+                onChange={selectStudy}
+                placeholder={
+                  listOfStudies.length > 0
+                    ? "Choose a study (" + listOfStudies.length + " found)"
+                    : "No studies found"
+                }
+                styles={selectStyles}
+              />
+            ) : null}
+            {type === "person" && listOfPeople !== null ? (
+              <Select
+                options={listOfPeople}
+                value={selectedPersonOption}
+                onChange={selectPerson}
+                placeholder={
+                  listOfPeople.length > 0
+                    ? "Choose a person (" + listOfPeople.length + " found)"
+                    : "No people found"
+                }
+                styles={selectStyles}
+              />
+            ) : null}
+          </Box>
+        ) : null}
+      </Grid>
+      <Grid item xs={9} sx={{ mt: 6 }}>
+        <Tooltip title="Information about this screen">
+          <IconButton
+            color="info"
+            size="small"
+            onClick={() => {
+              setOpenInfo(true);
+            }}
+            sx={{ mt: 1 }}
+          >
+            <Info fontSize="small" />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={`Zoom out`}>
+          <IconButton
+            color="info"
+            size="small"
+            onClick={() => {
+              setScale(scale > 0.6 ? scale - 0.5 : 0.5);
+            }}
+            sx={{
+              mt: 1,
+            }}
+          >
+            <ZoomOut fontSize="small" />
+          </IconButton>
+        </Tooltip>{" "}
+        <Tooltip title={`Reset`}>
+          <IconButton
+            color="info"
+            size="small"
+            onClick={() => {
+              setScale(1);
+            }}
+            sx={{
+              mt: 1,
+            }}
+          >
+            <RestartAlt fontSize="small" />
+          </IconButton>
+        </Tooltip>{" "}
+        <Tooltip title={`Zoom in`}>
+          <IconButton
+            color="info"
+            size="small"
+            onClick={() => {
+              setScale(scale + 1);
+            }}
+            sx={{
+              mt: 1,
+            }}
+          >
+            <ZoomIn fontSize="small" />
+          </IconButton>
+        </Tooltip>
+        {/* <Tooltip title="Toggle (fit screen / long view)">
+          <Checkbox
+            color={"success"}
+            checked={scrollable}
+            onChange={() => {
+              setScrollable(!scrollable);
+            }}
+          />
+        </Tooltip> */}
+        {/* <Tooltip title="Toggle collapse everything">
+          <Checkbox
+            checked={globalCollapse}
+            color={"warning"}
+            onChange={() => {
+              setGlobalCollapse(!globalCollapse);
+            }}
+          />
+        </Tooltip> */}
+      </Grid>
+      <Grid item xs={12}>
+        <Box>
+          {chart ? (
+            <HighchartsReact
+              highcharts={Highcharts}
+              constructorType={"ganttChart"}
+              options={chart}
             />
-          </Tooltip>
-          <Tooltip title="Toggle collapse everything">
-            <Checkbox
-              checked={globalCollapse}
-              color={"warning"}
-              onChange={() => {
-                setGlobalCollapse(!globalCollapse);
-              }}
-            />
-          </Tooltip>
-        </Box>
-      ) : null}
-      {chart ? (
-        <HighchartsReact
-          highcharts={Highcharts}
-          constructorType={"ganttChart"}
-          options={chart}
-        />
-      ) : null}
+          ) : null}
 
-      {/* Dialog with General info about this screen */}
-      <Dialog
-        fullWidth
-        maxWidth="xl"
-        onClose={() => setOpenInfo(false)}
-        open={openInfo}
-      >
-        <DialogTitle>Info about this screen</DialogTitle>
-        <DialogContent>
-          <p>Color key for milestones</p>
-          {colorsForMilestones &&
-            eventsToInclude &&
-            colorsForMilestones.map((color, colorIndex) => (
-              <ul key={colorIndex} style={{ color: color }}>
-                {color} = {eventsToInclude[colorIndex]}
-              </ul>
-            ))}
-          <p>Data sources</p>
-          <ul>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/assignments.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  assignments.json
-                </a>
-              </b>{" "}
-              has a list of all resources assigned to roles in studies, which is
-              manually created with this app
-            </li>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/key_dates.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  key_dates.json
-                </a>
-              </b>{" "}
-              has a list of all key dates for a study, which is edited by the
-              user but based on an initial running of{" "}
-              <a
-                href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/default_key_dates.sas"
-                target="_blank"
-                rel="noreferrer"
-              >
-                default_key_dates.sas
-              </a>
-            </li>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/studies_info.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  studies_info.json
-                </a>
-              </b>{" "}
-              has a list of all studies with their corresponding
-              compounds/products and indications, which is created by the
-              running of{" "}
-              <a
-                href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/studies_info.sas"
-                target="_blank"
-                rel="noreferrer"
-              >
-                studies_info.sas
-              </a>
-            </li>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/roles_long_short.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  roles_long_short.json
-                </a>
-              </b>{" "}
-              has a list of all roles with a (shorter) version to use when
-              showing in the Gantt chart
-            </li>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/events_to_include.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  events_to_include.json
-                </a>
-              </b>{" "}
-              has a list of events (variable names) to show as milestones
-            </li>
-            <li>
-              <b>
-                <a
-                  href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/colors_for_milestones.json"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  colors_for_milestones.json
-                </a>
-              </b>{" "}
-              has a list of colors to use for milestones which correspond to the
-              events from events_to_include, so this enables you to choose the
-              color to use for each different event/milestone
-            </li>
-          </ul>{" "}
-        </DialogContent>
-      </Dialog>
-    </Box>
+          {/* Dialog with General info about this screen */}
+          <Dialog
+            fullWidth
+            maxWidth="xl"
+            onClose={() => setOpenInfo(false)}
+            open={openInfo}
+          >
+            <DialogTitle>Info about this screen</DialogTitle>
+            <DialogContent>
+              <p>Color key for milestones</p>
+              {colorsForMilestones &&
+                eventsToInclude &&
+                colorsForMilestones.map((color, colorIndex) => (
+                  <ul key={colorIndex} style={{ color: color }}>
+                    {color} = {eventsToInclude[colorIndex]}
+                  </ul>
+                ))}
+              <p>Data sources</p>
+              <ul>
+                <li>
+                  <b>
+                    <a
+                      href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/assignments.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      assignments.json
+                    </a>
+                  </b>{" "}
+                  has a list of all resources assigned to roles in studies,
+                  which is manually created with this app
+                </li>
+                <li>
+                  <b>
+                    <a
+                      href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/key_dates.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      key_dates.json
+                    </a>
+                  </b>{" "}
+                  has a list of all key dates for a study, which is edited by
+                  the user but based on an initial running of{" "}
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/default_key_dates.sas"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    default_key_dates.sas
+                  </a>
+                </li>
+                <li>
+                  <b>
+                    <a
+                      href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/studies_info.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      studies_info.json
+                    </a>
+                  </b>{" "}
+                  has a list of all studies with their corresponding
+                  compounds/products and indications, which is created by the
+                  running of{" "}
+                  <a
+                    href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/studies_info.sas"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    studies_info.sas
+                  </a>
+                </li>
+                <li>
+                  <b>
+                    <a
+                      href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/roles_long_short.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      roles_long_short.json
+                    </a>
+                  </b>{" "}
+                  has a list of all roles with a (shorter) version to use when
+                  showing in the Gantt chart
+                </li>
+                <li>
+                  <b>
+                    <a
+                      href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/events_to_include.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      events_to_include.json
+                    </a>
+                  </b>{" "}
+                  has a list of events (variable names) to show as milestones
+                </li>
+                <li>
+                  <b>
+                    <a
+                      href="https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/tools/fileviewer/index.html?file=https://xarprod.ondemand.sas.com/lsaf/webdav/repo/general/biostat/metadata/projects/rm/colors_for_milestones.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      colors_for_milestones.json
+                    </a>
+                  </b>{" "}
+                  has a list of colors to use for milestones which correspond to
+                  the events from events_to_include, so this enables you to
+                  choose the color to use for each different event/milestone
+                </li>
+              </ul>{" "}
+            </DialogContent>
+          </Dialog>
+        </Box>
+      </Grid>
+    </Grid>
   );
 }
 
