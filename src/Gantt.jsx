@@ -142,7 +142,7 @@ function Gantt(props) {
   }, [mode, userJsonDir]);
 
   useEffect(() => {
-    if (studiesInfo === null) return;
+    if (studiesInfo === null || info === null) return;
     console.log("studiesInfo", studiesInfo, "info", info);
     const tempListOfStudies = Object.keys(studiesInfo).map((s) => {
         return { value: s, label: s };
@@ -319,8 +319,8 @@ function Gantt(props) {
           start: null,
           end: null,
           milestone: false,
-          parent: null,
-          role: null,
+          parent: "",
+          role: "",
           what: null,
           level: "1",
           collapsed: globalCollapse,
@@ -330,18 +330,17 @@ function Gantt(props) {
       Object.keys(minPerson).forEach((k) => {
         // console.log("k", k);
         seriesData.push(
-          // id, study, name, from, to, milestone, parent, role, level, collapsed
           ganttItem(
-            k,
-            k,
-            null,
-            minPerson[k],
-            maxPerson[k],
-            false,
-            null,
-            null,
-            "1",
-            globalCollapse
+            k, // id
+            k, // study
+            null, // name
+            minPerson[k], // from
+            maxPerson[k], // to
+            false, // milestone
+            "", // parent
+            "", // role
+            "1", // level
+            globalCollapse // collapsed
           )
         );
       });
@@ -529,6 +528,13 @@ function Gantt(props) {
       ganttData
     );
 
+    Highcharts.Templating.helpers.log = function () {
+      const { ctx } = arguments[0];
+      // console.log("ctx", ctx);
+      if (ctx.point.role !== null) return ctx.point.role;
+      else return ctx.key;
+    };
+
     // define gantt chart settings
     const tempChart = {
       chart: {
@@ -560,13 +566,16 @@ function Gantt(props) {
           // },
           dataLabels: {
             enabled: true,
-            format: "{point.role}",
+            // format: "{point.name}",
+            format: "{log}", // use this function to show text on bars - NOTE: it doesnt work with milestones
+            useHTML: true,
             style: {
               cursor: "default",
               pointerEvents: "none",
             },
           },
-          allowPointSelect: true,
+          label: { format: "{log}" },
+          allowPointSelect: false,
           point: {
             events: {
               select: (e) => {
@@ -604,6 +613,16 @@ function Gantt(props) {
         selected: 0,
       },
       accessibility: { enabled: false },
+      // accessibility: {
+      //   point: {
+      //     descriptionFormat:
+      //       "{#if milestone}" +
+      //       "{name}, milestone for {yCategory} at {x:%Y-%m-%d}." +
+      //       "{else}" +
+      //       "{name}, assigned to {yCategory} from {x:%Y-%m-%d} to {x2:%Y-%m-%d}." +
+      //       "{/if}",
+      //   },
+      // },
       dataLabels: {
         formatter: function () {
           if (this.point.milestone) {
@@ -623,6 +642,11 @@ function Gantt(props) {
           pointPadding: 0,
           groupPadding: 0,
           maxPointWidth: 30,
+          // dataLabels: {
+          //   formatter: function () {
+          //     return "test";
+          //   },
+          // },
           // dataLabels: {
           //   formatter: function() {
           //     if (this.point.milestone) {
@@ -657,7 +681,7 @@ function Gantt(props) {
             fromTo = dateFormat(format, point.start);
           if (!options.milestone)
             fromTo = fromTo + " → " + dateFormat(format, point.end);
-          // console.log("point", point, "options", options);
+          console.log("point", point, "options", options);
 
           lines = [
             // {
@@ -700,7 +724,11 @@ function Gantt(props) {
       },
     };
     console.log("tempChart", tempChart);
-    setChart(tempChart);
+    setChart(null);
+    setTimeout(() => {
+      setChart(tempChart);
+    }, 1000);
+
     // eslint-disable-next-line
   }, [
     info,
